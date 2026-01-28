@@ -571,7 +571,7 @@ label GUNDAM:
     
     w "麻烦解一下衣服，方便用听诊器。"
     
-    r "先谢（せんせい）Ｈ……"
+    r "【先谢|せんせい】Ｈ……"
     
     r "连着好几天我的胸口都闷闷的，今天更是痛得不行。听说您专治这个，我是托关系进来的。"
     
@@ -634,7 +634,7 @@ label GUNDAM:
 
     w "一切听提督的。"
 
-    r "目标○○大学，高爆弹，齐射，执行！"
+    r "目标暨南大学，高爆弹，齐射，执行！"
 
     w "齐射射出！"
 
@@ -1373,7 +1373,7 @@ label FATE:
     """
     {clear}
 
-    今天的○○大学，依旧是瓷色的灰蒙蒙。
+    今天的暨南大学，依旧是瓷色的灰蒙蒙。
 
     上课铃响了，那位明明是在瑞士任教的大背头似乎很适应中国的教学（不过也是，他本就是中国人），很快又继续他激情的讲课。
     
@@ -1512,7 +1512,7 @@ label FATE:
     
     "我一听到运动场的哨声还肚子痛。"
 
-    play music "music/to the beginning.mp3" fadein 1.0 fadeout 1.0 volume 0.3
+    play music "music/to the beginning.mp3"fadeout 1.0 volume 0.3
 
     $ renpy.notify("🎵正在播放：『To the beginning』")
 
@@ -2214,7 +2214,7 @@ label SEX:
 
     {clear}
 
-    所以——要问我新（心）的归属地：
+    所以——要问我【新|心】的归属地：
 
     那不是任何一个具体的地名。
     
@@ -2438,7 +2438,7 @@ label SEX:
 
     想点别的吧……
 
-    我抬头望去，才发现林笃不知什么时候把我找出的她的所有衣服都整整齐齐地挂了起来，包括睡衣、正装甚至还有她的高中校服。
+    我抬头望去，才发现林笃不知什么时候把我找出的她的所有衣服都整整齐齐地挂了起来，全是正装，甚至还有她的高中校服。
 
     一想起穿着这些衣服待在我家里的她，我就硬了起来……
 
@@ -2863,7 +2863,7 @@ label SEX:
 
     那我也不客气了。
 
-    正当我慢慢插进去时，她冷不防地喊了一句“一库（いく）哟☆”。
+    正当我慢慢插进去时，她冷不防地喊了一句“【一库|いく】哟☆”。
     """
 
     w "……"
@@ -2958,7 +2958,7 @@ label SEX:
     $ renpy.notify("🎵正在播放：『What comes into being』")
 
     adv """
-    受到这个刺激，积攒于体内深处的浊（灼）液在仿佛触电的那一瞬释放。
+    受到这个刺激，积攒于体内深处的【浊|灼】液在仿佛触电的那一瞬释放。
 
     我紧紧地从后面抱住了林笃。
 
@@ -3223,7 +3223,7 @@ label end:
     """
     第二天早。
     
-    算是林笃与我同居的Day 1吧。
+    算是林笃与我同居的Day 1 吧。
 
     林笃叫醒了我。
 
@@ -3260,17 +3260,22 @@ label end:
 
     hide rindo angry with dissolve
 
+    window hide
+    $ quick_menu = False
+
+    show fin at truecenter 
+    with dissolve
+
     stop music fadeout 5.0
+
+    $ renpy.pause(5.0, hard=True)
 
     scene black
     with fade
 
-    window hide
-    $ quick_menu = False
-
     play music "<from 31>music/last lament.mp3" fadein 5.0 volume 0.75
 
-    $ renpy.pause(5.0, hard=True)
+    $ renpy.pause(2.0, hard=True)
 
     $ renpy.notify("🎵正在播放：『Last Lament』")
     
@@ -3296,7 +3301,7 @@ label end:
     hide text with dissolve
     $ renpy.pause(1.0, hard=True)
 
-    show text "说实话，我对地球呀世界啊这类事情一点兴趣也没。\n这一点从我当任F4时你也能看出来。" with dissolve
+    show text "说实话，我对地球呀世界啊这类事情一点兴趣都没。\n这一点从我当任F4时你也能看出来。" with dissolve
     $ renpy.pause(2.0, hard=True)
 
     hide text with dissolve
@@ -3311,12 +3316,12 @@ label end:
     with fade
 
     show text "守护好所珍视的人，对一切不寻常保持警惕。\n不要被事物的表面现象所疑惑：CC人员早就潜伏在你生活的每一个死角。\n暨珠学运与青工办与你同在。武运昌隆，同志。" with dissolve
-    $ renpy.pause(5.0, hard=True)
+    $ renpy.pause(10.0, hard=True)
 
     play sound "end.wav" volume 1.0
 
     hide text with dissolve
-    $ renpy.pause(1.0, hard=True)
+    $ renpy.pause(2.0, hard=True)
 
     stop music fadeout 2.0
 
@@ -3331,15 +3336,6 @@ label end:
     $ _game_menu_screen = 'save'
     $ persistent.game_completed = True
     $ quick_menu = True  
-
-    play music "<from 9>music/last lament.mp3" fadein 2.0 volume 0.5
-
-    show fin at truecenter 
-    with dissolve
-
-    $ renpy.pause(10.5, hard=True)
-
-    stop music fadeout 5.0
 
     scene end menu 
     with fade

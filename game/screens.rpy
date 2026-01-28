@@ -127,9 +127,16 @@ screen say(who, what):
 init python:
     config.character_id_prefixes.append('namebox')
 
+style ruby_style is default:
+    size 15
+    yoffset -35
+    color None # 使用主文本相同的颜色。
+
 style window is default
 style say_label is default
-style say_dialogue is default
+style say_dialogue is default:
+    ruby_line_leading 15
+    ruby_style style.ruby_style
 style say_thought is say_dialogue
 
 style namebox is default
@@ -165,6 +172,8 @@ style say_dialogue:
     xpos gui.dialogue_xpos
     xsize gui.dialogue_width
     ypos gui.dialogue_ypos
+
+    
 
     adjust_spacing False
 
@@ -433,9 +442,7 @@ screen game_menu(title, scroll=None, yinitial=0.0, spacing=0):
 
     style_prefix "game_menu"
 
-    if persistent.game_completed:
-        add "gui/end_menu.png"  # 通关后的背景图片
-    elif main_menu:
+    if main_menu:
         add gui.main_menu_background
     else:
         add gui.game_menu_background
@@ -662,7 +669,7 @@ screen file_slots(title):
                         text FileSaveName(slot):
                             style "slot_name_text"
 
-                        key "K_BACKSPACE" action FileDelete(slot)
+                        key "K_DELETE" action FileDelete(slot)
 
             ## 用于访问其他页面的按钮。
             vbox:
@@ -948,7 +955,9 @@ style history_window is empty
 
 style history_name is gui_label
 style history_name_text is gui_label_text
-style history_text is gui_text
+style history_text is gui_text:
+    ruby_line_leading 15
+    ruby_style style.ruby_style
 
 style history_label is gui_label
 style history_label_text is gui_label_text
@@ -1010,7 +1019,7 @@ screen movie:
 
 transform skip_fade:
     alpha 1.0 
-    ease 5.0 alpha 0.0
+    easein 5.0 alpha 0.0
 
 
 
@@ -1399,7 +1408,7 @@ init python:
         },
         {
             "title": "轻小说",
-            "content": "　　一种以“可轻松阅读”为目的的文艺作品，诞生于日本。{p}　　最初的轻小说与现在的轻小说相去甚远，不少文坛大咖也相当青睐这种体裁。随着市场化的推进，在今天，轻小说更多指的是ACGN中“N”的一环，形成了一套完整的生态体系。它们多以青少年为主要受众，配有动漫风格的插图，一卷在10万到20万字不等（物理上根本不轻！不如口袋本），人气轻小说还会被搬上电视荧幕改编为TV动画。{p}　　由于如今的轻小说质量参差不齐，人们常戏称为“厕纸”“买插画送小说”。"
+            "content": "　　一种以“可轻松阅读”为目的的文艺作品，诞生于日本。{p}　　最初的轻小说与现在的轻小说相去甚远，不少文坛大咖也相当青睐这种体裁。随着市场化的推进，在今天，轻小说更多指的是ACGN中“N”的一环，形成了一套完整的产业体系。它们多以青少年为主要受众，配有动漫风格的插图，一卷在10万到20万字不等（物理上根本不轻！不如口袋本），人气轻小说还会被搬上电视荧幕改编为TV动画。{p}　　由于如今的轻小说质量参差不齐，人们常戏称为“厕纸”“买插画送小说”。"
         },
         {
             "title": "大和号",
@@ -1626,7 +1635,7 @@ screen keyboard_help():
         text _("打开游戏菜单。")
 
     hbox:
-        label _("Backspace")
+        label _("Delete")
         text _("悬停时按下删除存档。")
 
     hbox:
@@ -1642,7 +1651,7 @@ screen keyboard_help():
         text _("跳转至下一选项（与快进模式设置有关）。")
 
     hbox:
-        label "Shift+A"
+        label "Shift + A"
         text _("打开无障碍菜单。")
 
 
