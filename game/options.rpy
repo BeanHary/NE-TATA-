@@ -34,7 +34,7 @@ define gui.about = _p("""仅供内部交流学习使用，请勿进行任何形�
 ## 在构建的发布版中，可执行文件和目录所使用的短名称。此处仅限使用 ASCII 字符，并
 ## 且不能包含空格、冒号或分号。
 
-define build.name = "NE-TATA-"
+define build.name = "NE-TATA"
 
 
 ## 音效和音乐 #######################################################################
@@ -132,7 +132,7 @@ default preferences.afm_time = 15
 ##
 ## 该语句通常不应变更，若要变更，应为有效字符串而不是表达式。
 
-define config.save_directory = "RinDo-1767446874"
+define config.save_directory = "NE-TATA"
 
 
 ## 图标 ##########################################################################
