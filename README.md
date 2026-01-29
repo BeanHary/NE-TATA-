@@ -38,6 +38,17 @@
 - 模仿Infinity系列和科学ADV系列Tips List做的词典功能。
 - 修改Ren'py自带的反人类按键映射。e.g.滚轮上滑就该是打开对话历史＞＜。
 
+## ✔️Q&A
+
+Q1：我急着打洲/瓦/撸/农/刀/卡etc.能不能告诉我这个游戏大概多长？
+A1：剧本是由几个短篇拼接而成的，阅读起来非常轻松，时长约在30min～60min之间。
+
+Q2：RinDo版和LinDu版的区别？我该玩哪个版本？
+A2：RinDo版包含了所有的游戏内容，首选RinDo版。此外，在Windows平台和Android平台间，我也更推荐Windows平台，以保证最稳定、最完整的体验。
+
+Q3：windows系统下的存档路径？
+A3：由于Ren'py引擎硬编码的限制，注意导入/重置存档时需要在两个目录下进行。以RinDo版为例，存档位于NE-TATA-RinDo\game\saves和%APPDATA\RenPy\NE-TATA-RinDo下。
+
 ## 🙏 特别鸣谢
 
 - [Ren'py](https://www.renpy.org/)引擎及其完善的社区生态。
