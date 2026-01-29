@@ -747,7 +747,7 @@ style slot_button_text:
 ##
 ## 设置屏幕允许用户配置游戏，使其更适合自己。
 ##
-## https://doc.renpy.cn/zh-CN/screen_special.html#preferences
+## https://doc.renpy.cn/zh-CN/screen_special.html#preferences 
 
 screen preferences():
 

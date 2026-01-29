@@ -34,7 +34,7 @@ define gui.about = _p("""仅供内部交流学习使用，请勿进行任何形�
 ## 在构建的发布版中，可执行文件和目录所使用的短名称。此处仅限使用 ASCII 字符，并
 ## 且不能包含空格、冒号或分号。
 
-define build.name = "NE-TATA"
+define build.name = "NE-TATA-RinDo"
 
 
 ## 音效和音乐 #######################################################################
@@ -204,3 +204,8 @@ default persistent.dictionary_active = False
 
 default persistent.game_completed = False
 
+## 初始音量 ########################################################################
+##
+## 此部分控制初始的音量（有效范围为0-1）。
+
+default preferences.volume.main = 0.5
