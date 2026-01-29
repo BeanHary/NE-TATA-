@@ -109,7 +109,7 @@ label splashscreen:
     scene black
     with Pause(1)
 
-    show text "这是一个日本成人向美少女游戏。日语为本游戏的唯一官方语言。\n一切游戏内容均取材于日本：\n所有故事均发生在日本的中国地方，出场人物均为热爱中国文化的国际友人。与现实中国没有任何联系。\n仅供内部交流学习使用，请勿进行任何形式的二次分发！" 
+    show text "⚠️\n\n仅供内部交流学习使用，请勿进行任何形式的二次分发！\n这是一个日本成人向美少女游戏。与现实中国没有任何联系。\n日语为本游戏的唯一官方语言。一切游戏内容均取材于日本：\n故事背景位于日本的中国地方，出场人物均为热爱中国文化的国际友人。" 
     with dissolve
     with Pause(5)
 
@@ -297,7 +297,7 @@ label start:
     $ _game_menu_screen = None
     $ movie_length = 63
     $ skip_hide = 5.0
-    $ movie_playing = "images/video/op.webm"
+    $ movie_playing = "video/PC/op.webm"
         
     call screen movie with dissolve
 
@@ -2238,7 +2238,7 @@ label SEX:
     $ _game_menu_screen = None
     $ movie_length = 117
     $ skip_hide = 5.0
-    $ movie_playing = "images/video/R_ed.webm"
+    $ movie_playing = "video/PC/R_ed.webm"
 
     call screen movie with dissolve
 
@@ -3355,7 +3355,7 @@ label end:
     $ _game_menu_screen = None
     $ movie_length = 117
     $ skip_hide = 5.0
-    $ movie_playing = "images/video/R_extra_ed.webm"
+    $ movie_playing = "video/PC/R_extra_ed.webm"
         
     call screen movie 
     with dissolve
