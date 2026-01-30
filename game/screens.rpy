@@ -129,8 +129,8 @@ init python:
 
 style ruby_style is default:
     size 15
-    yoffset -35
-    color None # 使用主文本相同的颜色。
+    yoffset -35 # PC设置为-35，Android设置为-45较合适
+    color None 
 
 style window is default
 style say_label is default
@@ -320,10 +320,13 @@ screen navigation():
 
         textbutton _("读取") action ShowMenu("load")
 
+        # 对不同的设备，music_room将启用不同的布局
         if persistent.music_room_active and main_menu:
-
-            textbutton "鉴赏" action ShowMenu("music_room")
-
+            if renpy.variant("pc"):
+                textbutton "鉴赏" action ShowMenu("music_room")
+            elif renpy.variant("mobile"):
+                textbutton "鉴赏" action ShowMenu("music_room_android")
+            
         if persistent.dictionary_active:
 
             textbutton "词典" action ShowMenu("dictionary")
@@ -1239,7 +1242,7 @@ init python:
     # 创建按钮实例
     play_button = PlayerButton(mr=mr)
 
-# Step 3. 创建音乐空间界面。
+# Step 3.1 创建音乐空间界面（PC）
 screen music_room:
 
     tag menu
@@ -1314,6 +1317,95 @@ screen music_room:
                             textbutton "🔈" action Function(play_button.toggle_mute)   
                         null width 10
                         bar value Preference("music volume") xsize 500 yalign 0.5
+                            
+    # 音乐空间的音乐播放入口。
+    on "replace" action mr.Play()
+
+    # 离开时恢复主菜单的音乐。
+    on "replaced" action Play("music", "music/winter.mp3")
+
+
+
+# Step 3.2 创建音乐空间界面（Android）
+
+screen music_room_android:
+
+    tag menu
+
+    add "gui/music_room.png"
+
+    # 右键返回标题界面
+    key "mousedown_3" action ShowMenu("main_menu")
+
+    frame:
+        background None
+
+        has vbox
+
+        hbox:
+            vbox:
+        # 每条音轨的播放按钮。
+                textbutton "卢明俊 - 冬" action mr.Play("music/winter.mp3")
+                textbutton "卢明俊 - 春" action mr.Play("music/spring.mp3")
+                textbutton "曾志豪 - 美好时光" action mr.Play("music/wonderful time.mp3")
+                textbutton "贵族乐团 - 善变的女人" action mr.Play("music/woman.mp3")
+                textbutton "Alexandre Desplat - Obituary" action mr.Play("music/obituary.mp3")
+                textbutton "のる - どんぐりみいつけた" action mr.Play("music/daily2.mp3")
+                textbutton "のる - 空を見上げて" action mr.Play("music/sky.mp3")
+                textbutton "TinyMemory - A little happiness" action mr.Play("music/a little happiness.mp3")
+                textbutton "TinyMemory - Happiness is everywhere" action mr.Play("music/happiness is everywhere.mp3")
+
+                
+
+                textbutton "AKINO from bless4 - みいろ" action mr.Play("music/kantai collection.mp3")
+                textbutton "Kalafina - To the beginning" action mr.Play("music/to the beginning.mp3")
+                textbutton "ZARD - 负けないで" action mr.Play("music/never give up.mp3")
+                textbutton "川村ゆみ - Moving go on" action mr.Play("music/op A.mp3")
+                
+                
+
+            null width 20
+
+            vbox:
+                textbutton "えびかれー伯爵 - Sentence know" action mr.Play("music/sentence know.mp3")
+                textbutton "ゆうり - 越えられない壁" action mr.Play("music/wall.mp3")
+                textbutton "ゆうり - ゆるくいこうよ" action mr.Play("music/daily1.mp3")
+                textbutton "Fukagawa - うまくいくかね？" action mr.Play("music/play with.mp3")
+                textbutton "ハシマミ - Devil's whisper" action mr.Play("music/devil whisper.mp3")
+                textbutton "KOTATSU!! - えだまめ88" action mr.Play("music/kotatsu.mp3")
+                textbutton "yuhei komatsu - white" action mr.Play("music/white.mp3")
+                textbutton "Heitaro Ashibe - What comes into being" action mr.Play("music/what comes into being.mp3")
+                textbutton "Marron Fields Production - Last Lament" action mr.Play("music/last lament.mp3")
+
+                
+                textbutton "大原ゆい子 - 言わないけどね。" action mr.Play("music/op B.mp3")
+                textbutton "邓丽君 - 我只在乎你" action mr.Play("music/ed.mp3")
+                textbutton "イケてるハーツ - 罪証のルシファー" action mr.Play("music/extra ed.mp3")
+
+                
+
+                hbox:
+                    xalign 0.48
+                    textbutton "返回标题界面" action ShowMenu("main_menu") 
+
+                
+                     
+                    textbutton "⏮" action mr.Previous()
+                    null width 20
+                    textbutton play_button.get_text(): 
+                        action Function(play_button.click)
+                    null width 20
+                    textbutton "⏭" action mr.Next()
+                    null width 20
+
+                
+                    if config.has_music: 
+                        if not play_button.is_muted and preferences.get_mixer("music")!=0:
+                            textbutton "🔊" action Function(play_button.toggle_mute)
+                        else:
+                            textbutton "🔈" action Function(play_button.toggle_mute)   
+                        null width 10
+                        bar value Preference("music volume") xsize 200 yalign 0.5
                             
     # 音乐空间的音乐播放入口。
     on "replace" action mr.Play()
@@ -1556,6 +1648,7 @@ screen dictionary():
                     id "vp"
                     scrollbars "vertical"
                     mousewheel True
+                    draggable True
                     vbox:
                         for i in range(len(tips_data)):
                             button:

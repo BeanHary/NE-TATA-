@@ -20,6 +20,13 @@ image ctc_blink:
     linear 0.75 alpha 0.0
     repeat 
 
+# 欲构建安卓版，须将以上角色定义改成ctc="ctc_blink_android"
+image ctc_blink_android:
+    "gui/phone/button/ctc.png"
+    linear 0.75 alpha 1.0
+    linear 0.75 alpha 0.0
+    repeat
+
 image rindo unhappy:
     "images/rindo unhappy.png"
     zoom 500/240
@@ -297,7 +304,10 @@ label start:
     $ _game_menu_screen = None
     $ movie_length = 63
     $ skip_hide = 5.0
-    $ movie_playing = "video/PC/op.webm"
+    if renpy.variant("pc"):
+        $ movie_playing = "video/PC/op.webm"
+    elif renpy.variant("mobile"):
+        $ movie_playing = "video/Android/op.webm"
         
     call screen movie with dissolve
 
@@ -1978,10 +1988,10 @@ label HACKER:
 label ADULT:
     nvl clear
 
+    stop music fadeout 2.0 # 如果是从章节选择页面直接进来，就把标题界面音乐暂停掉
+
     scene bg dorm
     with fade
-
-    nvl clear
 
     """
     我跟林笃曾讨论过江恬的事，甚至于一路谈到了该怎么给江恬做性教育。
@@ -2238,7 +2248,11 @@ label SEX:
     $ _game_menu_screen = None
     $ movie_length = 117
     $ skip_hide = 5.0
-    $ movie_playing = "video/PC/R_ed.webm"
+
+    if renpy.variant("pc"):
+        $ movie_playing = "video/PC/R_ed.webm"
+    elif renpy.variant("mobile"):
+        $ movie_playing = "video/Android/R_ed.webm"
 
     call screen movie with dissolve
 
@@ -3355,7 +3369,11 @@ label end:
     $ _game_menu_screen = None
     $ movie_length = 117
     $ skip_hide = 5.0
-    $ movie_playing = "video/PC/R_extra_ed.webm"
+
+    if renpy.variant("pc"):
+        $ movie_playing = "video/PC/R_extra_ed.webm"
+    elif renpy.variant("mobile"):
+        $ movie_playing = "video/Android/R_extra_ed.webm"
         
     call screen movie 
     with dissolve
@@ -3363,6 +3381,8 @@ label end:
     $ _game_menu_screen = 'save'
     $ persistent.game_completed = True
     $ quick_menu = True  
+
+    stop sound
 
     scene end menu 
     with fade
