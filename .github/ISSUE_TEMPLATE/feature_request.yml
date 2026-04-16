@@ -19,8 +19,6 @@ body:
           required: false
         - label: "Lindu"
           required: false
-        - label: "Both"
-          required: false
     validations:
       required: true
   - type: "checkboxes"
@@ -30,8 +28,6 @@ body:
         - label: "Windows.x86-64"
           required: false
         - label: "Android"
-          required: false
-        - label: "Both"
           required: false
     validations:
       required: true

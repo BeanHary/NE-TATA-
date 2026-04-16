@@ -19,8 +19,6 @@ body:
           required: false
         - label: "Lindu"
           required: false
-        - label: "Both"
-          required: false
     validations:
       required: true
   - type: "checkboxes"
@@ -30,8 +28,6 @@ body:
         - label: "Windows.x86-64"
           required: false
         - label: "Android"
-          required: false
-        - label: "Both"
           required: false
     validations:
       required: true
@@ -43,11 +39,13 @@ body:
       required: true
   - type: "textarea"
     attributes:
-      label: "截图/日志文件（可选） - Screenshot / Logs (Optional) "
-      placeholder: "在此上传截图或日志文件..."
+      label: "截图/日志文件(可选) - Screenshot / Logs (Optional) "
+      placeholder: "在此上传截图或日志..."
     validations:
       required: false
   - type: "textarea"
     attributes:
-      label: "额外信息 - Addition Information"
-      placeholder: "在此填写可能有用的额外信息..."
+      label: "额外信息(可选) - Addition Information (Optional)"
+      placeholder: "在此填写可能有用的额外信息(e.g. 复现步骤)..."
+    validations:
+      required: false
