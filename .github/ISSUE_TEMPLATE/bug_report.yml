@@ -1,0 +1,53 @@
+name: "错误报告 - Bug Report"
+description: "来捉虫吧！"
+
+title: "[BUG]"
+labels:
+  - "Bug"
+body:
+  - type: "input"
+    attributes:
+      label: "版本号 - Version"
+      placeholder: "vX.X"
+    validations:
+      required: true
+  - type: "checkboxes"
+    attributes:
+      label: "分支 - Branch"
+      options:
+        - label: "Rindo"
+          required: false
+        - label: "Lindu"
+          required: false
+        - label: "Both"
+          required: false
+    validations:
+      required: true
+  - type: "checkboxes"
+    attributes:
+      label: "平台 - Platform"
+      options:
+        - label: "Windows.x86-64"
+          required: false
+        - label: "Android"
+          required: false
+        - label: "Both"
+          required: false
+    validations:
+      required: true
+  - type: "textarea"
+    attributes:
+      label: "问题描述 - Issue Description"
+      placeholder: "请详细描述你遇到的问题..."
+    validations:
+      required: true
+  - type: "textarea"
+    attributes:
+      label: "截图/日志文件（可选） - Screenshot / Logs (Optional) "
+      placeholder: "在此上传截图或日志文件..."
+    validations:
+      required: false
+  - type: "textarea"
+    attributes:
+      label: "额外信息 - Addition Information"
+      placeholder: "在此填写可能有用的额外信息..."

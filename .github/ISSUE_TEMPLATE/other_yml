@@ -1,0 +1,10 @@
+name: "其他 - Other"
+description: "杂货店？"
+
+title: "[Other]"
+labels:
+  - "Other"
+body:
+- type: "textarea"
+  validations:
+    required: true
