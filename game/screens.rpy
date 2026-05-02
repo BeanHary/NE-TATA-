@@ -3,6 +3,9 @@
 ################################################################################
 
 init offset = -1
+default movie_length = 0.0
+default skip_hide = 5.0
+default movie_playing = "None"
 
 
 ################################################################################
@@ -129,7 +132,7 @@ init python:
 
 style ruby_style is default:
     size 15
-    yoffset -35 # PC设置为-35，Android设置为-45较合适
+    yoffset -35 # PC为-35，Android为-45
     color None 
 
 style window is default
@@ -320,16 +323,10 @@ screen navigation():
 
         textbutton _("读取") action ShowMenu("load")
 
-        # 对不同的设备，music_room将启用不同的布局
         if persistent.music_room_active and main_menu:
-            if renpy.variant("pc"):
-                textbutton "鉴赏" action ShowMenu("music_room")
-            elif renpy.variant("mobile"):
-                textbutton "鉴赏" action ShowMenu("music_room_android")
-            
-        if persistent.dictionary_active:
+            textbutton _("鉴赏") action ShowMenu("music_room") 
 
-            textbutton "词典" action ShowMenu("dictionary")
+        textbutton _("词典") action ShowMenu("dictionary")
 
         textbutton _("设置") action ShowMenu("preferences")
 
@@ -376,10 +373,15 @@ screen main_menu():
     tag menu
 
     # 根据游戏是否通关来选择不同的背景
-    if persistent.game_completed:
-        add "gui/end_menu.png"  # 通关后的背景图片
+    if persistent.selected_background=="panda":
+        add "gui/end_menu.png"
+    elif persistent.selected_background=="shady":
+        add "gui/main_menu.png"  
+    elif persistent.game_completed:
+        add "gui/end_menu.png"
     else:
-        add gui.main_menu_background  # 默认背景
+        add "gui/main_menu.png" 
+
 
     ## 此空框可使标题菜单变暗。
     frame:
@@ -396,8 +398,11 @@ screen main_menu():
             text "[config.name!t]":
                 style "main_menu_title"
 
-            text "[config.version]":
-                style "main_menu_version"
+            textbutton "[config.version]":
+                text_style "main_menu_version"
+                xalign 1.0
+                action ShowMenu("about")
+                
 
 
 style main_menu_frame is empty
@@ -431,6 +436,8 @@ style main_menu_version:
     properties gui.text_properties("version")
     font "YouShiSanGeng.ttf"
     bold True
+    
+    
 
 
 ## 游戏菜单屏幕 ######################################################################
@@ -446,9 +453,14 @@ screen game_menu(title, scroll=None, yinitial=0.0, spacing=0):
     style_prefix "game_menu"
 
     if main_menu:
-        add gui.main_menu_background
-    else:
-        add gui.game_menu_background
+        if persistent.selected_background=="panda":
+            add "gui/end_menu.png"
+        elif persistent.selected_background=="shady":
+            add "gui/main_menu.png"  
+        elif persistent.game_completed:
+            add "gui/end_menu.png"
+        else:
+            add "gui/main_menu.png"
 
     frame:
         style "game_menu_outer_frame"
@@ -569,7 +581,8 @@ style return_button:
 ## 此屏幕提供有关游戏和 Ren'Py 的制作人员和版权信息。
 ##
 ## 此屏幕没有什么特别之处，因此它也可以作为一个例子来说明如何制作一个自定义屏
-## 幕。
+## 幕。    
+  
 
 screen about():
 
@@ -589,8 +602,57 @@ screen about():
             ## gui.about 通常在 options.rpy 中设置。
             if gui.about:
                 text "[gui.about!t]\n"
+            hbox:
+                textbutton _("切换标题背景") action If(
+                    persistent.selected_background == "shady",
+                    true=[
+                        SetField(persistent, "selected_background", "panda"),
+                        Function(renpy.save_persistent),
+                        Function(renpy.restart_interaction),
+                        Function(renpy.notify, "🔔 已切换为通关画面！")
+                    ],
+                    false=[
+                        SetField(persistent, "selected_background", "shady"),
+                        Function(renpy.save_persistent),
+                        Function(renpy.restart_interaction),
+                        Function(renpy.notify, "🔔 已切换为初始画面！")
+                    ]
+                )
 
-            text _("引擎：{a=https://www.renpy.org/}Ren'Py{/a} [renpy.version_only]\n\n[renpy.license!t]")
+                null width 50
+            
+                textbutton _("一键通关/重置进度") action If(
+                    persistent.game_completed,
+                    # 重置进度
+                    true=[
+                        Function(persistent._clear, progress=True),
+                        Function(reset_all_music),
+                        Function(renpy.save_persistent),
+                        Function(renpy.restart_interaction),
+                        Function(renpy.notify, "🔔 已重置进度！\n注：建议重启游戏以完全应用此更改。")
+                    ],
+
+                    # 一键通关
+                    false=[
+                        SetField(persistent, "chapter_menu_active", True),
+                        SetField(persistent, "music_room_active", True),
+                        SetField(persistent, "final_unlocked", True),
+                        SetField(persistent, "game_completed", True),
+                        Function(unlock_all_tips),
+                        Function(unlock_all_music),
+                        Function(renpy.save_persistent),
+                        Function(renpy.restart_interaction),
+                        Function(renpy.notify, "🔔 已一键通关！")
+                    ]
+                )
+                
+
+            null height 100
+
+            text ("----版权信息-----------")
+
+            text _("引擎：{a=https://www.renpy.org/}Ren'Py{/a} [renpy.version_only]\n\n项目仓库{a=https://github.com/BeanHary/NE-TATA}看这里{/a}，联系我们{a=https://beanbag-harry.netlify.app/}找这里{/a}。[renpy.license!t]")
+            
 
 
 style about_label is gui_label
@@ -599,7 +661,6 @@ style about_text is gui_text
 
 style about_label_text:
     size gui.label_text_size
-
 
 ## 读取和保存屏幕 #####################################################################
 ##
@@ -999,12 +1060,9 @@ style history_label_text:
 ## 影片屏幕 ########################################################################
 ##
 ## 这是一个向用户播放影片的屏幕。
-$ movie_length = 0
-$ skip_hide = 5.0
-$ movie_playing = "None"
+
 
 screen movie:
-    
     add Movie(size=(1920,1080))
     on "show" action [Play("movie", movie_playing, loop=False), SetVariable('quick_menu', False)]
     on "hide" action [Stop("movie"), SetVariable('quick_menu', True)]
@@ -1014,7 +1072,7 @@ screen movie:
     timer 0.1 repeat True action If(skip_hide > 0.0, true=(SetVariable('skip_hide', skip_hide - 0.1)), false=(SetVariable('skip_hide', 0)))
     
     if skip_hide and persistent.game_completed:
-        textbutton "跳过视频":
+        textbutton _("跳过视频"):
             action [Return(0), SetVariable('quick_menu', True)]
             sensitive (not renpy.get_screen("say"))
             align (.95,.95)
@@ -1092,16 +1150,24 @@ screen tooltip(text):
         at tooltip_transform
 
 screen chapter_menu():
-    tag menu
+    tag menu            
 
-    # 右键返回标题界面
-    key "mousedown_3" action ShowMenu("main_menu")
+    # 右键和Esc键返回标题界面
+    key "mousedown_3" action [Hide("tooltip"), ShowMenu("main_menu")]
+    key "K_ESCAPE" action [Hide("tooltip"), ShowMenu("main_menu")]
 
-    add "gui/main_menu.png"
+    if persistent.selected_background=="panda":
+        add "gui/end_menu.png"
+    elif persistent.selected_background=="shady":
+        add "gui/main_menu.png"  
+    elif persistent.game_completed:
+        add "gui/end_menu.png"
+    else:
+        add "gui/main_menu.png"
 
     add "gui/chapter_menu.png" at menu_transform
 
-    textbutton "返回标题界面":
+    textbutton _("返回标题界面"):
         pos (100, 1000)
         text_size 40
         action ShowMenu("main_menu")
@@ -1156,7 +1222,7 @@ screen chapter_menu():
             action NullAction()
 
 
-    if persistent.dictionary_active:
+    if persistent.final_unlocked:
         imagebutton:
             idle "gui/button/chapter4_idle.png" 
             hover "gui/button/chapter4_hover.png" 
@@ -1179,37 +1245,55 @@ screen chapter_menu():
 
 init python:
 
-    # Step 1. 创建一个MusicRoom实例。
     mr = MusicRoom(fadeout=1.0)
 
-    # Step 2. 添加音乐文件。
-    mr.add("music/winter.mp3")
-    mr.add("music/spring.mp3")
-    mr.add("music/wonderful time.mp3")
-    mr.add("music/woman.mp3")
-    mr.add("music/obituary.mp3")
-    mr.add("music/sentence know.mp3")
-    mr.add("music/daily1.mp3")
-    mr.add("music/daily2.mp3")
-    mr.add("music/sky.mp3")
-    mr.add("music/a little happiness.mp3")
-    mr.add("music/happiness is everywhere.mp3")
-    mr.add("music/wall.mp3")
-    mr.add("music/play with.mp3")
-    mr.add("music/devil whisper.mp3")
-    mr.add("music/white.mp3")
-    mr.add("music/what comes into being.mp3")
-    mr.add("music/last lament.mp3")
-    mr.add("music/kotatsu.mp3")
+    all_music_files = [
+        "music/winter.mp3",
+        "music/spring.mp3",
+        "music/wonderful time.mp3",
+        "music/woman.mp3",
+        "music/obituary.mp3", 
+        "music/sentence know.mp3", 
+        "music/daily1.mp3", 
+        "music/daily2.mp3", 
+        "music/sky.mp3", 
+        "music/a little happiness.mp3", 
+        "music/happiness is everywhere.mp3", 
+        "music/wall.mp3", 
+        "music/play with.mp3", 
+        "music/devil whisper.mp3", 
+        "music/white.mp3",
+        "music/what comes into being.mp3", 
+        "music/last lament.mp3", 
+        "music/kotatsu.mp3", 
+        "music/kantai collection.mp3", 
+        "music/to the beginning.mp3", 
+        "music/never give up.mp3", 
+        "music/ed.mp3", 
+        "music/extra ed.mp3"
+    ]
 
-    mr.add("music/kantai collection.mp3")
-    mr.add("music/to the beginning.mp3")
-    mr.add("music/never give up.mp3")
-    mr.add("music/op A.mp3", always_unlocked=True)
-    mr.add("music/op B.mp3", always_unlocked=True)
-    mr.add("music/ed.mp3", always_unlocked=True)
-    mr.add("music/extra ed.mp3", always_unlocked=True)
+    op_music_files = [
+        "music/op A.mp3",
+        "music/op B.mp3",
+    ]
 
+    for file in all_music_files:
+        mr.add(file, always_unlocked=False)  
+    for file in op_music_files:
+        mr.add(file, always_unlocked=True)    
+
+    def unlock_all_music():
+        for file in all_music_files:
+            mr.add(file, always_unlocked=True)   
+        for file in op_music_files:
+            mr.add(file, always_unlocked=True)
+
+    def reset_all_music():
+        for file in all_music_files:
+            mr.add(file, always_unlocked=False)   
+        for file in op_music_files:
+            mr.add(file, always_unlocked=True)
 
 # 创建播放按钮类
     class PlayerButton:
@@ -1239,27 +1323,56 @@ init python:
             else:
                 _preferences.set_volume("music", 1.0)
 
-    # 创建按钮实例
     play_button = PlayerButton(mr=mr)
 
-# Step 3.1 创建音乐空间界面（PC）
-screen music_room:
+label mr_op_movie:
+    stop music
+    $ path = "video/PC/op.webm" if renpy.variant("pc") else "video/Android/op.webm"
+    $ renpy.movie_cutscene(path)
+    return
 
+label mr_ed1_movie:
+    stop music
+    $ path = "video/PC/R_ed.webm" if renpy.variant("pc") else "video/Android/R_ed.webm"
+    $ renpy.movie_cutscene(path)
+    return
+
+label mr_ed2_movie:
+    stop music
+    $ path = "video/PC/R_extra_ed.webm" if renpy.variant("pc") else "video/Android/R_extra_ed.webm"
+    $ renpy.movie_cutscene(path)
+    return
+
+# 音乐空间界面
+screen music_room:
+    
     tag menu
 
     add "gui/music_room.png"
 
-    # 右键返回标题界面
+    textbutton _("返回标题界面") action ShowMenu("main_menu") align (1.0, 1.0) offset (-45, -45)
+
+    # 右键和Esc键返回标题界面
     key "mousedown_3" action ShowMenu("main_menu")
+    key "K_ESCAPE" action ShowMenu("main_menu")
 
-    frame:
-        background None
+    fixed:
+        viewport:
+            id "music_list_vp"
+            xalign 0.0
+            yalign 0.0
+            xmaximum 800
+            ymaximum 850 
+            scrollbars "vertical" 
+            if renpy.variant("pc"):
+                mousewheel True 
+            elif renpy.variant("mobile"):
+                draggable True   
 
-        has vbox
-
-        hbox:
             vbox:
-        # 每条音轨的播放按钮。
+                spacing 10
+                xfill True
+
                 textbutton "卢明俊 - 冬" action mr.Play("music/winter.mp3")
                 textbutton "卢明俊 - 春" action mr.Play("music/spring.mp3")
                 textbutton "曾志豪 - 美好时光" action mr.Play("music/wonderful time.mp3")
@@ -1269,158 +1382,87 @@ screen music_room:
                 textbutton "のる - 空を見上げて" action mr.Play("music/sky.mp3")
                 textbutton "TinyMemory - A little happiness" action mr.Play("music/a little happiness.mp3")
                 textbutton "TinyMemory - Happiness is everywhere" action mr.Play("music/happiness is everywhere.mp3")
+                textbutton "えびかれー伯爵 - Sentence know" action mr.Play("music/sentence know.mp3")
+                textbutton "ゆうり - 越えられない壁" action mr.Play("music/wall.mp3")
+                textbutton "ゆうり - ゆるくいこうよ" action mr.Play("music/daily1.mp3")
+                textbutton "Fukagawa - うまくいくかね？" action mr.Play("music/play with.mp3")
+                textbutton "ハシマミ - Devil's whisper" action mr.Play("music/devil whisper.mp3")
+                textbutton "KOTATSU!! - えだまめ88" action mr.Play("music/kotatsu.mp3")
+                textbutton "yuhei komatsu - white" action mr.Play("music/white.mp3")
+                textbutton "Heitaro Ashibe - What comes into being" action mr.Play("music/what comes into being.mp3")
+                textbutton "Marron Fields Production - Last Lament" action mr.Play("music/last lament.mp3")
 
                 null height 50
 
                 textbutton "AKINO from bless4 - みいろ" action mr.Play("music/kantai collection.mp3")
                 textbutton "Kalafina - To the beginning" action mr.Play("music/to the beginning.mp3")
                 textbutton "ZARD - 负けないで" action mr.Play("music/never give up.mp3")
-                textbutton "川村ゆみ - Moving go on" action mr.Play("music/op A.mp3")
-                textbutton "大原ゆい子 - 言わないけどね。" action mr.Play("music/op B.mp3")
-                textbutton "邓丽君 - 我只在乎你" action mr.Play("music/ed.mp3")
-                textbutton "イケてるハーツ - 罪証のルシファー" action mr.Play("music/extra ed.mp3")
 
-            null width 20
+                null height 50
+
+                if renpy.variant("pc"):
+                    textbutton "川村ゆみ - Moving go on 🎬" action mr.Play("music/op A.mp3") alternate Function(renpy.call_in_new_context, "mr_op_movie")
+                    textbutton "大原ゆい子 - 言わないけどね。 🎬" action mr.Play("music/op B.mp3") alternate Function(renpy.call_in_new_context, "mr_op_movie")
+                    textbutton "邓丽君 - 我只在乎你 🎬" action mr.Play("music/ed.mp3") alternate Function(renpy.call_in_new_context, "mr_ed1_movie")
+                    textbutton "イケてるハーツ - 罪証のルシファー 🎬" action mr.Play("music/extra ed.mp3") alternate Function(renpy.call_in_new_context, "mr_ed2_movie")
+
+                if renpy.variant("mobile"):
+                    textbutton "川村ゆみ - Moving go on" action mr.Play("music/op A.mp3")
+                    textbutton "大原ゆい子 - 言わないけどね。" action mr.Play("music/op B.mp3")
+                    textbutton "邓丽君 - 我只在乎你" action mr.Play("music/ed.mp3")
+                    textbutton "イケてるハーツ - 罪証のルシファー" action mr.Play("music/extra ed.mp3")
+
+                    null height 50
+
+                    textbutton "播放op影片 🎬" action Function(renpy.call_in_new_context, "mr_op_movie")
+                    textbutton "播放ed影片 🎬" action Function(renpy.call_in_new_context, "mr_ed1_movie")
+                    textbutton "播放extra ed影片 🎬" action Function(renpy.call_in_new_context, "mr_ed2_movie")
+                
+        frame:
+            xalign 0.0
+            yalign 1.0
+            xmaximum 800
+            background "#00000000"
+            padding (20, 20, 20, 20) 
 
             vbox:
-                textbutton "えびかれー伯爵 - Sentence know" action mr.Play("music/sentence know.mp3")
-                textbutton "ゆうり - 越えられない壁" action mr.Play("music/wall.mp3")
-                textbutton "ゆうり - ゆるくいこうよ" action mr.Play("music/daily1.mp3")
-                textbutton "Fukagawa - うまくいくかね？" action mr.Play("music/play with.mp3")
-                textbutton "ハシマミ - Devil's whisper" action mr.Play("music/devil whisper.mp3")
-                textbutton "KOTATSU!! - えだまめ88" action mr.Play("music/kotatsu.mp3")
-                textbutton "yuhei komatsu - white" action mr.Play("music/white.mp3")
-                textbutton "Heitaro Ashibe - What comes into being" action mr.Play("music/what comes into being.mp3")
-                textbutton "Marron Fields Production - Last Lament" action mr.Play("music/last lament.mp3")
+                spacing 15
+                xfill True
 
-                null height 175
+                if renpy.variant("pc"):
+                    text "右键带有 🎬 的曲目可播放对应影片" size 16 color "#a0a0a0" xalign 0.5
 
+                # 播放控制
                 hbox:
-                    xalign 0.48
-                    textbutton "返回标题界面" action ShowMenu("main_menu") 
-
-                hbox:
-                    xalign 0.5  
+                    xalign 0.5
+                    spacing 15
                     textbutton "⏮" action mr.Previous()
-                    null width 20
                     textbutton play_button.get_text(): 
                         action Function(play_button.click)
-                    null width 20
                     textbutton "⏭" action mr.Next()
-                    null width 20
 
+                # 音量控制
                 hbox:
+                    xalign 0.5
+                    spacing 10
                     if config.has_music: 
                         if not play_button.is_muted and preferences.get_mixer("music")!=0:
                             textbutton "🔊" action Function(play_button.toggle_mute)
                         else:
                             textbutton "🔈" action Function(play_button.toggle_mute)   
-                        null width 10
-                        bar value Preference("music volume") xsize 500 yalign 0.5
-                            
-    # 音乐空间的音乐播放入口。
+                        bar value Preference("music volume") xsize 400 yalign 0.5
+
     on "replace" action mr.Play()
-
-    # 离开时恢复主菜单的音乐。
     on "replaced" action Play("music", "music/winter.mp3")
-
-
-
-# Step 3.2 创建音乐空间界面（Android）
-
-screen music_room_android:
-
-    tag menu
-
-    add "gui/music_room.png"
-
-    # 右键返回标题界面
-    key "mousedown_3" action ShowMenu("main_menu")
-
-    frame:
-        background None
-
-        has vbox
-
-        hbox:
-            vbox:
-        # 每条音轨的播放按钮。
-                textbutton "卢明俊 - 冬" action mr.Play("music/winter.mp3")
-                textbutton "卢明俊 - 春" action mr.Play("music/spring.mp3")
-                textbutton "曾志豪 - 美好时光" action mr.Play("music/wonderful time.mp3")
-                textbutton "贵族乐团 - 善变的女人" action mr.Play("music/woman.mp3")
-                textbutton "Alexandre Desplat - Obituary" action mr.Play("music/obituary.mp3")
-                textbutton "のる - どんぐりみいつけた" action mr.Play("music/daily2.mp3")
-                textbutton "のる - 空を見上げて" action mr.Play("music/sky.mp3")
-                textbutton "TinyMemory - A little happiness" action mr.Play("music/a little happiness.mp3")
-                textbutton "TinyMemory - Happiness is everywhere" action mr.Play("music/happiness is everywhere.mp3")
-
-                
-
-                textbutton "AKINO from bless4 - みいろ" action mr.Play("music/kantai collection.mp3")
-                textbutton "Kalafina - To the beginning" action mr.Play("music/to the beginning.mp3")
-                textbutton "ZARD - 负けないで" action mr.Play("music/never give up.mp3")
-                textbutton "川村ゆみ - Moving go on" action mr.Play("music/op A.mp3")
-                
-                
-
-            null width 20
-
-            vbox:
-                textbutton "えびかれー伯爵 - Sentence know" action mr.Play("music/sentence know.mp3")
-                textbutton "ゆうり - 越えられない壁" action mr.Play("music/wall.mp3")
-                textbutton "ゆうり - ゆるくいこうよ" action mr.Play("music/daily1.mp3")
-                textbutton "Fukagawa - うまくいくかね？" action mr.Play("music/play with.mp3")
-                textbutton "ハシマミ - Devil's whisper" action mr.Play("music/devil whisper.mp3")
-                textbutton "KOTATSU!! - えだまめ88" action mr.Play("music/kotatsu.mp3")
-                textbutton "yuhei komatsu - white" action mr.Play("music/white.mp3")
-                textbutton "Heitaro Ashibe - What comes into being" action mr.Play("music/what comes into being.mp3")
-                textbutton "Marron Fields Production - Last Lament" action mr.Play("music/last lament.mp3")
-
-                
-                textbutton "大原ゆい子 - 言わないけどね。" action mr.Play("music/op B.mp3")
-                textbutton "邓丽君 - 我只在乎你" action mr.Play("music/ed.mp3")
-                textbutton "イケてるハーツ - 罪証のルシファー" action mr.Play("music/extra ed.mp3")
-
-                
-
-                hbox:
-                    xalign 0.48
-                    textbutton "返回标题界面" action ShowMenu("main_menu") 
-
-                
-                     
-                    textbutton "⏮" action mr.Previous()
-                    null width 20
-                    textbutton play_button.get_text(): 
-                        action Function(play_button.click)
-                    null width 20
-                    textbutton "⏭" action mr.Next()
-                    null width 20
-
-                
-                    if config.has_music: 
-                        if not play_button.is_muted and preferences.get_mixer("music")!=0:
-                            textbutton "🔊" action Function(play_button.toggle_mute)
-                        else:
-                            textbutton "🔈" action Function(play_button.toggle_mute)   
-                        null width 10
-                        bar value Preference("music volume") xsize 200 yalign 0.5
-                            
-    # 音乐空间的音乐播放入口。
-    on "replace" action mr.Play()
-
-    # 离开时恢复主菜单的音乐。
-    on "replaced" action Play("music", "music/winter.mp3")
-
 
 
 ## 词典屏幕 ########################################################################
 ##
 ## 这是一个向用户展示tips的屏幕。
 
+
 init python:
-    # 定义所有tips
+
     tips_data = [
         {
             "title": "暨珠学运与青工办",
@@ -1632,13 +1674,36 @@ init python:
         }
     ]
     
+    if not isinstance(getattr(persistent, "tips_unlocked", None), set):
+        persistent.tips_unlocked = set()
+
+    def unlock_tip(title):  
+        for tip in tips_data:
+            if tip["title"] == title:
+                persistent.tips_unlocked.add(title)
+                renpy.restart_interaction()
+                return
+        renpy.notify(f"未找到名为「{title}」的tip")
+
+    def unlock_all_tips():
+        if not isinstance(getattr(persistent, "tips_unlocked", None), set):
+            persistent.tips_unlocked = set()
+        for tip in tips_data:
+            persistent.tips_unlocked.add(tip["title"])
+        renpy.restart_interaction()
+
     current_tip = 0
+
 
 screen dictionary():
     tag menu
+
+    python:
+        if not isinstance(getattr(persistent, "tips_unlocked", None), set):
+            persistent.tips_unlocked = set()
+        persistent.tips_unlocked.add("暨珠学运与青工办")
     
     use game_menu("词典"):
-        
         hbox:
             # 左侧：tips列表
             frame:
@@ -1647,29 +1712,39 @@ screen dictionary():
                 viewport:
                     id "vp"
                     scrollbars "vertical"
-                    mousewheel True
-                    draggable True
+                    if renpy.variant("pc"):
+                        mousewheel True 
+                    elif renpy.variant("mobile"):
+                        draggable True
+
                     vbox:
-                        for i in range(len(tips_data)):
+                        for i, tip in enumerate(tips_data):
                             button:
-                                xsize 430
-                                # 高亮当前选中的tip
-                                if SelectedIf:
+                                xsize 420
+                                if i == current_tip:
                                     background "#333333"
                                 else:
                                     background "#222222"
                                 hover_background "#444444"
-                                action [SetVariable("current_tip", i), SelectedIf(i == current_tip)]
-                                text tips_data[i]["title"] style "button_text"
+                                action SetVariable("current_tip", i)
+                                text tip["title"] style "button_text"
             
-            # 右侧：tip详情
+            # 右侧：tips详情
             frame:
                 xsize 750
                 ysize 750
-                vbox:
-                    text tips_data[current_tip]["title"] size 40 xalign 0.5
-                    null height 20
-                    text tips_data[current_tip]["content"] size 30
+                viewport:
+
+                    vbox:
+                        text tips_data[current_tip]["title"] size 40 xalign 0.5
+                        null height 20
+                        
+                        if tips_data[current_tip]["title"] in persistent.tips_unlocked:
+                            text tips_data[current_tip]["content"] size 30
+                        else:
+                            text "未解锁" size 30 color "#888888" 
+    
+ 
 
 
 

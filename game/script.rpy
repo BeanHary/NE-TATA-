@@ -1,3 +1,8 @@
+## 如何构建Android版本：
+#
+# 1. script.rpy中所有角色定义的ctc参数改成ctc="ctc_blink_android"
+# 2. screens.rpy中ruby_style的yoffset从-35改成-45
+
 define r = Character("林笃", who_color="#f18aca", ctc="ctc_blink", ctc_position="nestled")
 
 define w = Character("许○○", who_color="#d6ba8c", ctc="ctc_blink", ctc_position="nestled")
@@ -13,6 +18,7 @@ define j = Character("江恬", who_color="#f2f547", ctc="ctc_blink", ctc_positio
 define narrator = nvl_narrator
 
 define adv = Character(ctc="ctc_blink", ctc_position="nestled")
+# PC为ctc="ctc_blink"，Android为ctc="ctc_blink_android"
 
 image ctc_blink:
     "gui/button/ctc.png"
@@ -20,7 +26,6 @@ image ctc_blink:
     linear 0.75 alpha 0.0
     repeat 
 
-# 欲构建安卓版，须将以上角色定义改成ctc="ctc_blink_android"
 image ctc_blink_android:
     "gui/phone/button/ctc.png"
     linear 0.75 alpha 1.0
@@ -112,7 +117,7 @@ style chapter_complete_text:
     
 
 label splashscreen:
-
+    
     scene black
     with Pause(1)
 
@@ -136,6 +141,7 @@ label splashscreen:
     return
 
 label start:
+    
     play music "music/daily1.mp3" fadein 2.0 fadeout 2.0 volume 0.75
 
     $ renpy.notify("🎵正在播放：『ゆるくいこうよ』")
@@ -152,14 +158,17 @@ label start:
     """
 
     $ renpy.notify("💡Tip：“神粥”已添加至词典")
+    $ unlock_tip("神粥")
 
     with Pause(0.5)
 
     $ renpy.notify("💡Tip：“玫瑰战争”已添加至词典")
+    $ unlock_tip("玫瑰战争")
 
     with Pause(0.5) 
 
     $ renpy.notify("💡Tip：“国补”已添加至词典")
+    $ unlock_tip("国补")
 
     "牢神粥在经历“玫瑰战争”后就光荣退役了，在双十一先抬价再发券的“预热”下问新笔电when不如问国补when；"
 
@@ -172,6 +181,7 @@ label start:
     """
 
     $ renpy.notify("💡Tip：“现充”已添加至词典")
+    $ unlock_tip("现充")
     
     """
     综测分这种东西完完全全就是现充分。
@@ -182,14 +192,17 @@ label start:
     """
 
     $ renpy.notify("💡Tip：“负能量”已添加至词典")
+    $ unlock_tip("负能量")
 
     with Pause(0.5)
 
     $ renpy.notify("💡Tip：“史塔西虫洞”已添加至词典")
+    $ unlock_tip("史塔西虫洞")
 
     "只要我愿意，把“负能量生成架”“基于史塔西虫洞的时间机器”报上去写几篇论文、申请几个专利不是随随便便拿国奖乃至诺奖！"
 
     $ renpy.notify("💡Tip：“地球OL”已添加至词典")
+    $ unlock_tip("地球OL")
 
     "地球ＯＬ是最狗屎的游戏。"
 
@@ -202,14 +215,17 @@ label start:
     """
 
     $ renpy.notify("💡Tip：“BBS”已添加至词典")
+    $ unlock_tip("BBS")
 
     "如果现实能像互联网那样尽可能公开透明就好了，毕竟只要一个ＢＢＳ就可以满足人基本的情报需求。"
 
     $ renpy.notify("💡Tip：“DQN”已添加至词典")
+    $ unlock_tip("DQN")
 
     "可ＤＱＮ们有什么事只会重复“建小群－拉人－＠全体成员－扫邀请码－另建小群”的流程。"
 
     $ renpy.notify("💡Tip：“V信”已添加至词典")
+    $ unlock_tip("V信")
 
     "V信一拉，满满当当的精神污染。"
 
@@ -237,14 +253,17 @@ label start:
     adv "人哪～果然还是多穿衣服比较好看！我默默地发出转凉后的第二声感慨。"
 
     $ renpy.notify("💡Tip：“galgame”已添加至词典")
+    $ unlock_tip("galgame")
     
     adv "只要玩过galgame的都知道衣服有多重要。"
 
     $ renpy.notify("💡Tip：“HS”已添加至词典")
+    $ unlock_tip("HS")
 
     with Pause(0.5)
 
     $ renpy.notify("💡Tip：“薄纱”已添加至词典")
+    $ unlock_tip("薄纱")
     
     adv "穿衣ＨＳ薄纱脱衣ＨＳ是业界显而易见的常识。"
 
@@ -324,6 +343,7 @@ label GUNDAM:
     with Pause(0.5)
 
     $ renpy.notify("💡Tip：“百do”已添加至词典")
+    $ unlock_tip("百do")
 
     adv """
     百do说，首先要创造一个轻松的氛围。
@@ -402,12 +422,14 @@ label GUNDAM:
     "不知不觉走到了宿舍区。"
 
     $ renpy.notify("💡Tip：“MC”已添加至词典")
-    
+    $ unlock_tip("MC")
+
     "可能校方玩ＭＣ只会造火柴盒？"
 
     "四幢比麻将牌还方正的宿舍楼规整地占据着四个金角。"
 
     $ renpy.notify("💡Tip：“草肚皮”已添加至词典")
+    $ unlock_tip("草肚皮")
     
     "十字形的天空之下，必死的草肚皮之上，有目眩中堵得透不过气的游人。"
 
@@ -435,6 +457,7 @@ label GUNDAM:
     r "一般。"
 
     $ renpy.notify("💡Tip：“圆明新园”已添加至词典")
+    $ unlock_tip("圆明新园")
 
     w "就去圆明新园怎么样？要是去太远我也骑不动呢。"
 
@@ -449,6 +472,7 @@ label GUNDAM:
     adv "正当我深感像在带小孩子时，终于想起林笃穿的裙子不方便骑车！"
 
     $ renpy.notify("💡Tip：“安全裤”已添加至词典")
+    $ unlock_tip("安全裤")
 
     adv"""
     为什么一开始发明来用于遮羞的内裤漏出来给别人看到又会衍生出另一种羞耻以至于要诞生安全裤这种东西照这样无限套娃下去是不是要在安全裤外再套一层安全裤的吐槽且放一边。
@@ -508,6 +532,7 @@ label GUNDAM:
     adv "可大灰狼确确实实是不小心抓到小白兔了。"
 
     $ renpy.notify("💡Tip：“轻小说”已添加至词典")
+    $ unlock_tip("轻小说")
     
     adv "我不想像某些轻小说男主一样，详细地描述是什么形状什么触感云云，唯一能透露的就是：比江恬那种一马平川的好一些些。"
 
@@ -688,10 +713,12 @@ label GUNDAM:
     w "我们一起‘地球侵略’！"
 
     $ renpy.notify("💡Tip：“大和号”已添加至词典")
+    $ unlock_tip("大和号")
 
     with Pause(0.5)
 
     $ renpy.notify("💡Tip：“波动炮”已添加至词典")
+    $ unlock_tip("波动炮")
 
     w "不，不止，还要打造比大和号更大更宏伟的宇宙战舰，用波动炮干爆整个银河系哈哈哈哈哈哈!!!"
 
@@ -716,6 +743,7 @@ label GUNDAM:
     w "我会追你到天涯海角。"
 
     $ renpy.notify("💡Tip：“光明顶”已添加至词典")
+    $ unlock_tip("光明顶")
     
     w "把正派们在光明山顶都打得落花流水。"
 
@@ -844,19 +872,25 @@ label GUNDAM:
     
     道理很简单，因为笨蛋是不会感冒的。
     """
-    $ persistent.chapter_menu_active = True
+    
 
     window hide
     $ quick_menu = False
+    $ persistent.chapter_menu_active = True
 
     show chapter1 complete at truecenter 
     with dissolve
     $ renpy.pause(5.0, hard=True)
 
-    hide text with dissolve
+    hide chapter1 complete with dissolve
     with Pause(1)
 
-    if renpy.confirm("你现在可以通过标题界面的“开始游戏”按钮\n进入新的章节或者回顾已完成的章节。\n{size=-3}（按下“确认”继续下一章节，按下“取消”返回标题界面）{/size}"):
+    if persistent.game_completed:
+        stop music fadeout 2.0
+        stop sound
+
+        $ quick_menu = True
+    elif renpy.confirm("你现在可以通过标题界面的“开始游戏”按钮\n进入新的章节或者回顾已完成的章节。\n{size=-3}（按下“确认”继续下一章节，按下“取消”返回标题界面）{/size}"):
         stop music fadeout 2.0
         stop sound
 
@@ -865,16 +899,12 @@ label GUNDAM:
         stop music fadeout 2.0
         stop sound
         
-        if persistent.game_completed:
-            scene end menu 
-            with dissolve
-        else:
-            scene bg shady 
-            with dissolve
+        scene bg shady 
+        with dissolve
         $ renpy.pause(2.0, hard=True)
+        
         $ quick_menu = True
         return
-
 
 label FATE:
 
@@ -934,6 +964,7 @@ label FATE:
     """
 
     $ renpy.notify("💡Tip：“3S政策”已添加至词典")
+    $ unlock_tip("3S政策")
 
     adv "正当我在内心感慨都是手机和３Ｓ政策毁了当代年轻人时，忽而瞥到林笃这个季节还穿着裙子。"
     
@@ -1016,6 +1047,7 @@ label FATE:
     """
 
     $ renpy.notify("💡Tip：“苏黎世联邦理工学院”已添加至词典")
+    $ unlock_tip("苏黎世联邦理工学院")
 
     r "哇噢，他是苏黎世联邦理工学院的教授欸。"
 
@@ -1034,6 +1066,7 @@ label FATE:
     """
 
     $ renpy.notify("💡Tip：“尤里”已添加至词典")
+    $ unlock_tip("尤里")
     
     "但信这些我觉得还不如信蜥蜴人接管了美国白宫、月球背面藏有纳粹残党的反攻基地、苏联是靠尤里心灵控制打赢的二战。"
 
@@ -1056,15 +1089,18 @@ label FATE:
     """
 
     $ renpy.notify("💡Tip：“SSD”已添加至词典")
+    $ unlock_tip("SSD")
 
     with Pause(0.5)
 
     $ renpy.notify("💡Tip：“RAM”已添加至词典")
+    $ unlock_tip("RAM")
 
     with Pause(0.5)
 
     $ renpy.notify("💡Tip：“狗东”已添加至词典")
-    
+    $ unlock_tip("狗东")
+
     "我特意切到狗东看了一眼，一块１Ｔ的TLC颗粒SSD正向着千元大关突进，一条１６Ｇ DDR5的RAM就顶我３个月的工资。"
 
     play music "music/devil whisper.mp3" fadeout 2.0 volume 0.75
@@ -1074,12 +1110,14 @@ label FATE:
     with Pause(0.5)
 
     $ renpy.notify("💡Tip：“区块链”已添加至词典")
+    $ unlock_tip("区块链")
 
     "昨天是区块链，今天是AI，首先遭遇冲击的永远是ToC，背地里赚得盆满钵满的永远是上 · 面 · 的 · 人。"
 
     "照这个趋势，要什么时候才适合买新电脑啊（趴）。"
 
     $ renpy.notify("💡Tip：“CloudFlare”已添加至词典")
+    $ unlock_tip("CloudFlare")
 
     "昨天CloudFlare崩溃带着大大小小的网站一起瘫痪了。"
 
@@ -1098,10 +1136,12 @@ label FATE:
     RR "我说昨天怎么起飞不了。"
 
     $ renpy.notify("💡Tip：“⭐🦆🐜”已添加至词典")
+    $ unlock_tip("⭐🦆🐜")
 
     RR "⭐🦆🐜了。"
 
     $ renpy.notify("💡Tip：“四大元老”已添加至词典")
+    $ unlock_tip("四大元老")
 
     RR "哎哟我操，四大元老怎么这么坏呀。"
 
@@ -1110,6 +1150,7 @@ label FATE:
     RR "愿意信四大元老也是没谁了，只能说基本盘还是太牢固了🤣。"
 
     $ renpy.notify("💡Tip：“⏰”已添加至词典")
+    $ unlock_tip("⏰")
 
     RR "这次CF崩溃是不是说明⏰的网络基建在世界都处于领先水平？"
 
@@ -1120,12 +1161,14 @@ label FATE:
     RR "都是四大元老干的😤。"
 
     $ renpy.notify("💡Tip：“航÷”已添加至词典")
+    $ unlock_tip("航÷")
 
     RR "现在航÷认知都这么低下了吗？你知道CF对全球互联网的重要性吗就搁着论证赢学。"
 
     nvl clear
 
     $ renpy.notify("💡Tip：“神区”已添加至词典")
+    $ unlock_tip("神区")
 
     RR "看这次一下炸出多少神区。"
 
@@ -1138,10 +1181,12 @@ label FATE:
     RR "你不要害我们装不了机。"
 
     $ renpy.notify("💡Tip：“85”已添加至词典")
+    $ unlock_tip("85")
 
     with Pause(0.5)
 
     $ renpy.notify("💡Tip：“十循永封”已添加至词典")
+    $ unlock_tip("十循永封")
 
     RR "见证的是真烦……85呢谁at下？给楼上来个十循永封就老实了。"
 
@@ -1150,18 +1195,22 @@ label FATE:
     RR "没用的。DIY圈寒冬这事上热搜了，什么牛鬼蛇神都来了。"
 
     $ renpy.notify("💡Tip：“串子”已添加至词典")
+    $ unlock_tip("串子")
 
     RR "别理那人。纯串子引战来的，他小号被封好几个了都。"
 
     $ renpy.notify("💡Tip：“等等党”已添加至词典")
+    $ unlock_tip("等等党")
 
     RR "唉，等等党输麻了。"
 
     $ renpy.notify("💡Tip：“阿瓦隆”已添加至词典")
+    $ unlock_tip("阿瓦隆")
 
     RR "阿瓦隆：不好的评论我会删。"
 
     $ renpy.notify("💡Tip：“噼里啪啦”已添加至词典")
+    $ unlock_tip("噼里啪啦")
 
     RR "阿瓦隆是噼里啪啦的吧？"
 
@@ -1251,6 +1300,7 @@ label FATE:
     """
 
     $ renpy.notify("💡Tip：“笔电男大”已添加至词典")
+    $ unlock_tip("笔电男大")
 
     """
     ↑ 笔电男大的丑态。
@@ -1441,10 +1491,12 @@ label FATE:
     """
 
     $ renpy.notify("💡Tip：“人人点评”已添加至词典")
+    $ unlock_tip("人人点评")
 
     with Pause(0.5)
 
     $ renpy.notify("💡Tip：“米团”已添加至词典")
+    $ unlock_tip("米团")
 
     "顺带一提，点餐是在她指导下跟她分头在人人点评和米团找对应的代金券和团购对比出的最优解，匪夷所思的是最后居然还被她神经大条地教育一顿“跟别的女孩子出门吃饭不要这样子喔”……"
 
@@ -1541,10 +1593,12 @@ label FATE:
     stop music fadeout 1.0
 
     $ renpy.notify("💡Tip：“中二”已添加至词典")
+    $ unlock_tip("中二")
 
     with Pause(0.5)
 
     $ renpy.notify("💡Tip：“尴尬癌”已添加至词典")
+    $ unlock_tip("尴尬癌")
 
     """
     {clear}
@@ -1559,6 +1613,7 @@ label FATE:
     """
 
     $ renpy.notify("💡Tip：“Docker”已添加至词典")
+    $ unlock_tip("Docker")
 
     """
     就像程序员不仅要在自己的环境下跑通程序，在其他运行环境下也得保证其正常运行一样——希望地球ＯＬ尽早实装Docker——
@@ -1829,32 +1884,35 @@ label FATE:
     "登上这段阶梯。"
 
     "我走完了最后这段孤身一人的５０米。"
-    $ persistent.music_room_active = True
+    
 
     window hide
     $ quick_menu = False
+    $ persistent.music_room_active = True
 
     show chapter2 complete at truecenter
     with dissolve
     $ renpy.pause(5.0, hard=True)
 
-    hide text with dissolve
+    hide chapter2 complete with dissolve
     with Pause(1)
 
-    if renpy.confirm("你现在可以通过标题界面的“鉴赏”按钮\n回顾已收集的歌曲。\n{size=-3}（按下“确认”继续下一章节，按下“取消”返回标题界面）{/size}"):
+    if persistent.game_completed:
+        stop music fadeout 2.0
+        stop sound
+
+        $ quick_menu = True
+    elif renpy.confirm("你现在可以通过标题界面的“鉴赏”按钮\n回顾已收集的歌曲。\n{size=-3}（按下“确认”继续下一章节，按下“取消”返回标题界面）{/size}"):
         stop music fadeout 2.0
         stop sound 
+        
         $ quick_menu = True  
     else:
         stop music fadeout 2.0
         stop sound
 
-        if persistent.game_completed:
-            scene end menu 
-            with dissolve
-        else:
-            scene bg shady 
-            with dissolve
+        scene bg shady 
+        with dissolve
         $ renpy.pause(2.0, hard=True)
         $ quick_menu = True 
         return
@@ -1908,6 +1966,7 @@ label HACKER:
     adv "……"
 
     $ renpy.notify("💡Tip：“领域展开”已添加至词典")
+    $ unlock_tip("领域展开")
 
     w "相信爸爸，这次一定……领域展开！"
 
@@ -1970,6 +2029,7 @@ label HACKER:
     adv "她的手指指着一个图标。"
 
     $ renpy.notify("💡Tip：“洋葱路由”已添加至词典")
+    $ unlock_tip("洋葱路由")
 
     w "Tor浏览器，与一般的浏览器不太一样，采用洋葱路由流量的方式进行加密连接，配合俄罗斯的SMS-Activate可以实现几乎完全匿名的上网噢。"
 
@@ -1978,6 +2038,7 @@ label HACKER:
     adv "江恬歪着头。"
 
     $ renpy.notify("💡Tip：“渗透测试”已添加至词典")
+    $ unlock_tip("渗透测试")
 
     w "蚁剑和冰蝎。用来做渗透测试……"
 
@@ -2125,32 +2186,35 @@ label ADULT:
     adv "我悄悄松口气，放下心来。"
 
     adv "今天的晚饭，就由我来做吧。"
-    $ persistent.dictionary_active = True
+    
 
     window hide
     $ quick_menu = False
+    $ persistent.final_unlocked = True
 
     show chapter3 complete at truecenter
     with dissolve
     $ renpy.pause(5.0, hard=True)
 
-    hide text with dissolve
+    hide chapter3 complete with dissolve
     with Pause(1)
 
-    if renpy.confirm("你现在可以通过标题界面的“词典”按钮\n回顾已收集的Tips。\n{size=-3}（按下“确认”继续下一章节，按下“取消”返回标题界面）{/size}"):
+    if persistent.game_completed:
         stop music fadeout 2.0
         stop sound
+
+        $ quick_menu = True
+    elif renpy.confirm("最终章已解锁。在此之前的一个小小提示：\n在你所不留意的角落或许藏着什么。\n{size=-3}（按下“确认”继续下一章节，按下“取消”返回标题界面）{/size}"):
+        stop music fadeout 2.0
+        stop sound
+        
         $ quick_menu = True     
     else:
         stop music fadeout 2.0
         stop sound
 
-        if persistent.game_completed:
-            scene end menu 
-            with dissolve
-        else:
-            scene bg shady 
-            with dissolve
+        scene bg shady 
+        with dissolve
         $ renpy.pause(2.0, hard=True)
         $ quick_menu = True 
         return
@@ -2258,9 +2322,13 @@ label SEX:
 
     $ _game_menu_screen = 'save'
 
+    # 解锁ed
+    play music "music/ed.mp3" volume 0
+
     if renpy.confirm("注意：前方是一个HS。欢迎在公开场合展示。\n（按下“确认”继续游戏。按下“取消”跳过HS。）"):
         pass
     else:
+        play music "music/what comes into being.mp3" fadein 2.0 fadeout 2.0 volume 0.75
         jump end  
 
     scene bg night 
@@ -3335,6 +3403,7 @@ label end:
     play sound "end.wav" volume 0.75
 
     $ renpy.notify("💡终极Tip：“中央俱乐部”已添加至词典")
+    $ unlock_tip("中央俱乐部")
 
     show text "为了绕开“中央俱乐部”的阿瓦隆系统向外传递信息，\n林笃和我专门制作了这个游戏作为掩护。" with dissolve
     $ renpy.pause(2.0, hard=True)
@@ -3380,8 +3449,13 @@ label end:
 
     $ _game_menu_screen = 'save'
     $ persistent.game_completed = True
+    $ persistent.selected_background = "panda"
     $ quick_menu = True  
 
+    # 解锁extra ed
+    play music "music/extra ed.mp3" volume 0
+
+    stop music
     stop sound
 
     scene end menu 

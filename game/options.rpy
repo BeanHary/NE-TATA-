@@ -11,7 +11,7 @@
 ##
 ## 带有 _() 的字符串表示其可被翻译。
 
-define config.name = _("NE⭐TATA—！")
+define config.name = _("NE⭐TATA—！～RinDo～")
 
 
 ## 决定上面给出的标题是否显示在标题界面屏幕。设置为 False 来隐藏标题。
@@ -21,13 +21,14 @@ define gui.show_name = True
 
 ## 游戏版本号。
 
-define config.version = "RinDo.ver"
+define config.version = "v1.1"
 
 
 ## 放置在游戏内“关于”屏幕上的文本。将文本放在三个引号之间，并在段落之间留出空
 ## 行。
 
-define gui.about = _p("""仅供内部交流学习使用，请勿进行任何形式的二次分发！
+define gui.about = _p("""没有爱就看不见——恭喜你发现了一个秘密房间！
+{p}看来也不是所有人都认知不到651嘛！给你几个神奇的小按钮吧：
 """)
 
 
@@ -200,9 +201,11 @@ default persistent.chapter_menu_active = False
 
 default persistent.music_room_active = False
 
-default persistent.dictionary_active = False
+default persistent.final_unlocked = False
 
 default persistent.game_completed = False
+
+default persistent.selected_background = "shady"
 
 ## 初始音量 ########################################################################
 ##
