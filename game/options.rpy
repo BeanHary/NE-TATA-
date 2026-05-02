@@ -11,7 +11,7 @@
 ##
 ## 带有 _() 的字符串表示其可被翻译。
 
-define config.name = _("NE⭐TATA—！")
+define config.name = _("NE⭐TATA—！～LinDu～")
 
 
 ## 决定上面给出的标题是否显示在标题界面屏幕。设置为 False 来隐藏标题。
@@ -21,20 +21,21 @@ define gui.show_name = True
 
 ## 游戏版本号。
 
-define config.version = "RinDo.ver"
+define config.version = "v1.1"
 
 
 ## 放置在游戏内“关于”屏幕上的文本。将文本放在三个引号之间，并在段落之间留出空
 ## 行。
 
-define gui.about = _p("""仅供内部交流学习使用，请勿进行任何形式的二次分发！
+define gui.about = _p("""没有爱就看不见——恭喜你发现了一个秘密房间！
+{p}看来也不是所有人都认知不到651嘛！给你几个神奇的小按钮吧：
 """)
 
 
 ## 在构建的发布版中，可执行文件和目录所使用的短名称。此处仅限使用 ASCII 字符，并
 ## 且不能包含空格、冒号或分号。
 
-define build.name = "NE-TATA-RinDo"
+define build.name = "NE-TATA-LinDu"
 
 
 ## 音效和音乐 #######################################################################
@@ -132,7 +133,7 @@ default preferences.afm_time = 15
 ##
 ## 该语句通常不应变更，若要变更，应为有效字符串而不是表达式。
 
-define config.save_directory = "NE-TATA-RinDo"
+define config.save_directory = "NE-TATA-LinDu"
 
 
 ## 图标 ##########################################################################
@@ -200,9 +201,11 @@ default persistent.chapter_menu_active = False
 
 default persistent.music_room_active = False
 
-default persistent.dictionary_active = False
+default persistent.final_unlocked = False
 
 default persistent.game_completed = False
+
+default persistent.selected_background = "shady"
 
 ## 初始音量 ########################################################################
 ##

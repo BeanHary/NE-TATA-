@@ -1,3 +1,8 @@
+## 如何构建Android版本：
+#
+# 1. script.rpy中所有角色定义的ctc参数改成ctc="ctc_blink_android"
+# 2. screens.rpy中ruby_style的yoffset从-35改成-45
+
 define r = Character("林笃", who_color="#f18aca", ctc="ctc_blink", ctc_position="nestled")
 
 define w = Character("许○○", who_color="#d6ba8c", ctc="ctc_blink", ctc_position="nestled")
@@ -13,6 +18,7 @@ define j = Character("江恬", who_color="#f2f547", ctc="ctc_blink", ctc_positio
 define narrator = nvl_narrator
 
 define adv = Character(ctc="ctc_blink", ctc_position="nestled")
+# PC为ctc="ctc_blink"，Android为ctc="ctc_blink_android"
 
 image ctc_blink:
     "gui/button/ctc.png"
@@ -20,43 +26,42 @@ image ctc_blink:
     linear 0.75 alpha 0.0
     repeat 
 
-# 欲构建安卓版，须将以上角色定义改成ctc="ctc_blink_android"
 image ctc_blink_android:
     "gui/phone/button/ctc.png"
     linear 0.75 alpha 1.0
     linear 0.75 alpha 0.0
     repeat
 
-image rindo unhappy:
-    "images/rindo unhappy.png"
+image lindu unhappy:
+    "images/lindu unhappy.png"
     zoom 500/240
 
-image rindo doggy:
-    "images/rindo doggy.png"
+image lindu doggy:
+    "images/lindu doggy.png"
     zoom 500/303
 
-image rindo shy:
-    "images/rindo shy.png"
+image lindu shy:
+    "images/lindu shy.png"
     zoom 500/742
 
-image rindo ok:
-    "images/rindo ok.png"
+image lindu ok:
+    "images/lindu ok.png"
     zoom 500/480
 
-image rindo angry:
-    "images/rindo angry.png"
+image lindu angry:
+    "images/lindu angry.png"
     zoom 500/398
 
-image rindo satisfied:
-    "images/rindo satisfied.png"
+image lindu satisfied:
+    "images/lindu satisfied.png"
     zoom 500/466
 
-image rindo amazed:
-    "images/rindo amazed.jpg"
+image lindu amazed:
+    "images/lindu amazed.jpg"
     zoom 500/673
 
-image rindo jealous:
-    "images/rindo jealous.jpg"
+image lindu jealous:
+    "images/lindu jealous.jpg"
     zoom 500/246
 
 image hammer:
@@ -87,13 +92,6 @@ image bg hometown:
     "images/bg hometown.png"
     zoom 1920/2030
 
-image sex:
-    "images/white.png"
-    0.4
-    "images/bg sex.png"
-    0.4
-    repeat 
-
 image chapter1 complete = Text("章节《节操屹立于大地之上》已完成。", style="chapter_complete_text") 
 
 image chapter2 complete = Text("章节《她的呼吸、她的体温》已完成。", style="chapter_complete_text") 
@@ -116,7 +114,7 @@ label splashscreen:
     scene black
     with Pause(1)
 
-    show text "⚠️\n\n仅供内部交流学习使用，请勿进行任何形式的二次分发！\n这是一个日本成人向美少女游戏。与现实中国没有任何联系。\n日语为本游戏的唯一官方语言。一切游戏内容均取材于日本：\n故事背景位于日本的中国地方，出场人物均为热爱中国文化的国际友人。" 
+    show text "⚠️\n\n仅供内部交流学习使用，请勿进行任何形式的二次分发！\n这是一个日本全年龄美少女游戏。与现实中国没有任何联系。\n日语为本游戏的唯一官方语言。一切游戏内容均取材于日本：\n故事背景位于日本的中国地方，出场人物均为热爱中国文化的国际友人。" 
     with dissolve
     with Pause(5)
 
@@ -152,14 +150,17 @@ label start:
     """
 
     $ renpy.notify("💡Tip：“神粥”已添加至词典")
+    $ unlock_tip("神粥")
 
     with Pause(0.5)
 
     $ renpy.notify("💡Tip：“玫瑰战争”已添加至词典")
+    $ unlock_tip("玫瑰战争")
 
     with Pause(0.5) 
 
     $ renpy.notify("💡Tip：“国补”已添加至词典")
+    $ unlock_tip("国补")
 
     "牢神粥在经历“玫瑰战争”后就光荣退役了，在双十一先抬价再发券的“预热”下问新笔电when不如问国补when；"
 
@@ -172,7 +173,8 @@ label start:
     """
 
     $ renpy.notify("💡Tip：“现充”已添加至词典")
-    
+    $ unlock_tip("现充")
+
     """
     综测分这种东西完完全全就是现充分。
     
@@ -182,14 +184,17 @@ label start:
     """
 
     $ renpy.notify("💡Tip：“负能量”已添加至词典")
+    $ unlock_tip("负能量")
 
     with Pause(0.5)
 
     $ renpy.notify("💡Tip：“史塔西虫洞”已添加至词典")
+    $ unlock_tip("史塔西虫洞")
 
     "只要我愿意，把“负能量生成架”“基于史塔西虫洞的时间机器”报上去写几篇论文、申请几个专利不是随随便便拿国奖乃至诺奖！"
 
     $ renpy.notify("💡Tip：“地球OL”已添加至词典")
+    $ unlock_tip("地球OL")
 
     "地球ＯＬ是最狗屎的游戏。"
 
@@ -202,14 +207,17 @@ label start:
     """
 
     $ renpy.notify("💡Tip：“BBS”已添加至词典")
+    $ unlock_tip("BBS")
 
     "如果现实能像互联网那样尽可能公开透明就好了，毕竟只要一个ＢＢＳ就可以满足人基本的情报需求。"
 
     $ renpy.notify("💡Tip：“DQN”已添加至词典")
+    $ unlock_tip("DQN")
 
     "可ＤＱＮ们有什么事只会重复“建小群－拉人－＠全体成员－扫邀请码－另建小群”的流程。"
 
     $ renpy.notify("💡Tip：“V信”已添加至词典")
+    $ unlock_tip("V信")
 
     "V信一拉，满满当当的精神污染。"
 
@@ -231,20 +239,23 @@ label start:
 
     stop music fadeout 2.0
 
-    show rindo unhappy at truecenter
+    show lindu unhappy at truecenter
     with dissolve 
 
     adv "人哪～果然还是多穿衣服比较好看！我默默地发出转凉后的第二声感慨。"
 
     $ renpy.notify("💡Tip：“galgame”已添加至词典")
+    $ unlock_tip("galgame")
     
     adv "只要玩过galgame的都知道衣服有多重要。"
 
     $ renpy.notify("💡Tip：“HS”已添加至词典")
+    $ unlock_tip("HS")
 
     with Pause(0.5)
 
     $ renpy.notify("💡Tip：“薄纱”已添加至词典")
+    $ unlock_tip("薄纱")
     
     adv "穿衣ＨＳ薄纱脱衣ＨＳ是业界显而易见的常识。"
 
@@ -254,7 +265,7 @@ label start:
 
     $ renpy.notify("🎵正在播放：《善变的女人》")
 
-    hide rindo unhappy
+    hide lindu unhappy
     with dissolve
 
     w "你在等谁吗？"
@@ -324,6 +335,7 @@ label GUNDAM:
     with Pause(0.5)
 
     $ renpy.notify("💡Tip：“百do”已添加至词典")
+    $ unlock_tip("百do")
 
     adv """
     百do说，首先要创造一个轻松的氛围。
@@ -363,7 +375,7 @@ label GUNDAM:
 
     window hide
 
-    show rindo angry at truecenter
+    show lindu angry at truecenter
     with dissolve
 
     adv "我编不下去了。"
@@ -373,7 +385,7 @@ label GUNDAM:
     adv "林笃真的坐下了。"
 
     window hide
-    show rindo doggy at truecenter
+    show lindu doggy at truecenter
     with dissolve
 
     adv """
@@ -386,7 +398,7 @@ label GUNDAM:
 
     w "起立～乖，别苦闷了好不好？伸手……握手——"
 
-    hide rindo doggy
+    hide lindu doggy
     with dissolve
 
     scene shock
@@ -402,14 +414,11 @@ label GUNDAM:
     "不知不觉走到了宿舍区。"
 
     $ renpy.notify("💡Tip：“MC”已添加至词典")
-    
+    $ unlock_tip("MC")
+
     "可能校方玩ＭＣ只会造火柴盒？"
 
     "四幢比麻将牌还方正的宿舍楼规整地占据着四个金角。"
-
-    $ renpy.notify("💡Tip：“草肚皮”已添加至词典")
-    
-    "十字形的天空之下，必死的草肚皮之上，有目眩中堵得透不过气的游人。"
 
     "刚有起色就回去便前功尽弃了。"
     
@@ -435,6 +444,7 @@ label GUNDAM:
     r "一般。"
 
     $ renpy.notify("💡Tip：“圆明新园”已添加至词典")
+    $ unlock_tip("圆明新园")
 
     w "就去圆明新园怎么样？要是去太远我也骑不动呢。"
 
@@ -449,6 +459,7 @@ label GUNDAM:
     adv "正当我深感像在带小孩子时，终于想起林笃穿的裙子不方便骑车！"
 
     $ renpy.notify("💡Tip：“安全裤”已添加至词典")
+    $ unlock_tip("安全裤")
 
     adv"""
     为什么一开始发明来用于遮羞的内裤漏出来给别人看到又会衍生出另一种羞耻以至于要诞生安全裤这种东西照这样无限套娃下去是不是要在安全裤外再套一层安全裤的吐槽且放一边。
@@ -508,6 +519,7 @@ label GUNDAM:
     adv "可大灰狼确确实实是不小心抓到小白兔了。"
 
     $ renpy.notify("💡Tip：“轻小说”已添加至词典")
+    $ unlock_tip("轻小说")
     
     adv "我不想像某些轻小说男主一样，详细地描述是什么形状什么触感云云，唯一能透露的就是：比江恬那种一马平川的好一些些。"
 
@@ -688,10 +700,12 @@ label GUNDAM:
     w "我们一起‘地球侵略’！"
 
     $ renpy.notify("💡Tip：“大和号”已添加至词典")
+    $ unlock_tip("大和号")
 
     with Pause(0.5)
 
     $ renpy.notify("💡Tip：“波动炮”已添加至词典")
+    $ unlock_tip("波动炮")
 
     w "不，不止，还要打造比大和号更大更宏伟的宇宙战舰，用波动炮干爆整个银河系哈哈哈哈哈哈!!!"
 
@@ -716,6 +730,7 @@ label GUNDAM:
     w "我会追你到天涯海角。"
 
     $ renpy.notify("💡Tip：“光明顶”已添加至词典")
+    $ unlock_tip("光明顶")
     
     w "把正派们在光明山顶都打得落花流水。"
 
@@ -844,19 +859,24 @@ label GUNDAM:
     
     道理很简单，因为笨蛋是不会感冒的。
     """
-    $ persistent.chapter_menu_active = True
 
     window hide
     $ quick_menu = False
+    $ persistent.chapter_menu_active = True
 
     show chapter1 complete at truecenter 
     with dissolve
     $ renpy.pause(5.0, hard=True)
 
-    hide text with dissolve
+    hide chapter1 complete with dissolve
     with Pause(1)
 
-    if renpy.confirm("你现在可以通过标题界面的“开始游戏”按钮\n进入新的章节或者回顾已完成的章节。\n{size=-3}（按下“确认”继续下一章节，按下“取消”返回标题界面）{/size}"):
+    if persistent.game_completed:
+        stop music fadeout 2.0
+        stop sound
+
+        $ quick_menu = True
+    elif renpy.confirm("你现在可以通过标题界面的“开始游戏”按钮\n进入新的章节或者回顾已完成的章节。\n{size=-3}（按下“确认”继续下一章节，按下“取消”返回标题界面）{/size}"):
         stop music fadeout 2.0
         stop sound
 
@@ -865,13 +885,10 @@ label GUNDAM:
         stop music fadeout 2.0
         stop sound
         
-        if persistent.game_completed:
-            scene end menu 
-            with dissolve
-        else:
-            scene bg shady 
-            with dissolve
+        scene bg shady 
+        with dissolve
         $ renpy.pause(2.0, hard=True)
+        
         $ quick_menu = True
         return
 
@@ -933,9 +950,7 @@ label FATE:
     {clear}
     """
 
-    $ renpy.notify("💡Tip：“3S政策”已添加至词典")
-
-    adv "正当我在内心感慨都是手机和３Ｓ政策毁了当代年轻人时，忽而瞥到林笃这个季节还穿着裙子。"
+    adv "正当我在内心感慨时，忽而瞥到林笃这个季节还穿着裙子。"
     
     adv "我捶了一下她的大腿。"
     
@@ -1012,34 +1027,12 @@ label FATE:
 
     在那老登介绍这个大背头有多么多么厉害时，我才意识到平时他从来不会掐点到教室。
     
-    正稍微有点的愧疚感很快就被林笃打断了：
+    稍微有点愧疚感。
     """
-
-    $ renpy.notify("💡Tip：“苏黎世联邦理工学院”已添加至词典")
-
-    r "哇噢，他是苏黎世联邦理工学院的教授欸。"
 
     stop music fadeout 2.0
 
     """
-    {clear}
-
-    原来是在瑞士待过的人啊……
-    
-    是我的错觉吗？
-    
-    感觉中国人只要在国外待久了不止肢体动作、说话方式，连五官外貌都会往外国人的方向长。
-
-    我知道有些传闻最近是很火啦……
-    """
-
-    $ renpy.notify("💡Tip：“尤里”已添加至词典")
-    
-    "但信这些我觉得还不如信蜥蜴人接管了美国白宫、月球背面藏有纳粹残党的反攻基地、苏联是靠尤里心灵控制打赢的二战。"
-
-    """
-    我趴回到桌子上，表示不感兴趣。
-
     {clear}
     
     照常识来说，这种请来的名校教授不是净吹嘘自己的资历就是长篇累牍地介绍自己的科研成果，更严谨地，后者也不过是前者的另一种表现形式。
@@ -1056,15 +1049,18 @@ label FATE:
     """
 
     $ renpy.notify("💡Tip：“SSD”已添加至词典")
+    $ unlock_tip("SSD")
 
     with Pause(0.5)
 
     $ renpy.notify("💡Tip：“RAM”已添加至词典")
+    $ unlock_tip("RAM")
 
     with Pause(0.5)
 
     $ renpy.notify("💡Tip：“狗东”已添加至词典")
-    
+    $ unlock_tip("狗东")
+
     "我特意切到狗东看了一眼，一块１Ｔ的TLC颗粒SSD正向着千元大关突进，一条１６Ｇ DDR5的RAM就顶我３个月的工资。"
 
     play music "music/devil whisper.mp3" fadeout 2.0 volume 0.75
@@ -1074,12 +1070,14 @@ label FATE:
     with Pause(0.5)
 
     $ renpy.notify("💡Tip：“区块链”已添加至词典")
+    $ unlock_tip("区块链")
 
-    "昨天是区块链，今天是AI，首先遭遇冲击的永远是ToC，背地里赚得盆满钵满的永远是上 · 面 · 的 · 人。"
+    "昨天是区块链，今天是AI，首先遭遇冲击的永远是ToC。"
 
     "照这个趋势，要什么时候才适合买新电脑啊（趴）。"
 
     $ renpy.notify("💡Tip：“CloudFlare”已添加至词典")
+    $ unlock_tip("CloudFlare")
 
     "昨天CloudFlare崩溃带着大大小小的网站一起瘫痪了。"
 
@@ -1098,18 +1096,16 @@ label FATE:
     RR "我说昨天怎么起飞不了。"
 
     $ renpy.notify("💡Tip：“⭐🦆🐜”已添加至词典")
+    $ unlock_tip("⭐🦆🐜")
 
     RR "⭐🦆🐜了。"
-
-    $ renpy.notify("💡Tip：“四大元老”已添加至词典")
-
-    RR "哎哟我操，四大元老怎么这么坏呀。"
 
     nvl clear
 
     RR "愿意信四大元老也是没谁了，只能说基本盘还是太牢固了🤣。"
 
     $ renpy.notify("💡Tip：“⏰”已添加至词典")
+    $ unlock_tip("⏰")
 
     RR "这次CF崩溃是不是说明⏰的网络基建在世界都处于领先水平？"
 
@@ -1117,15 +1113,15 @@ label FATE:
 
     RR "昨晚迫降的损失谁给我补啊。"
 
-    RR "都是四大元老干的😤。"
-
     $ renpy.notify("💡Tip：“航÷”已添加至词典")
+    $ unlock_tip("航÷")
 
     RR "现在航÷认知都这么低下了吗？你知道CF对全球互联网的重要性吗就搁着论证赢学。"
 
     nvl clear
 
     $ renpy.notify("💡Tip：“神区”已添加至词典")
+    $ unlock_tip("神区")
 
     RR "看这次一下炸出多少神区。"
 
@@ -1138,10 +1134,12 @@ label FATE:
     RR "你不要害我们装不了机。"
 
     $ renpy.notify("💡Tip：“85”已添加至词典")
+    $ unlock_tip("85")
 
     with Pause(0.5)
 
     $ renpy.notify("💡Tip：“十循永封”已添加至词典")
+    $ unlock_tip("十循永封")
 
     RR "见证的是真烦……85呢谁at下？给楼上来个十循永封就老实了。"
 
@@ -1150,31 +1148,20 @@ label FATE:
     RR "没用的。DIY圈寒冬这事上热搜了，什么牛鬼蛇神都来了。"
 
     $ renpy.notify("💡Tip：“串子”已添加至词典")
+    $ unlock_tip("串子")
 
     RR "别理那人。纯串子引战来的，他小号被封好几个了都。"
 
     $ renpy.notify("💡Tip：“等等党”已添加至词典")
+    $ unlock_tip("等等党")
 
     RR "唉，等等党输麻了。"
-
-    $ renpy.notify("💡Tip：“阿瓦隆”已添加至词典")
-
-    RR "阿瓦隆：不好的评论我会删。"
-
-    $ renpy.notify("💡Tip：“噼里啪啦”已添加至词典")
-
-    RR "阿瓦隆是噼里啪啦的吧？"
 
     """
     ……
 
     {clear}
 
-    我总有一种感觉——
-    
-    就是说啊，类似的、雷同的帖子和评论，每隔一段时间就会在我的手机里刷新。
-    
-    可每当你想要溯源时又找不着最初是在哪里看过了。
     """
 
     stop music fadeout 2.0
@@ -1205,8 +1192,6 @@ label FATE:
     另外，什么嘛，他不也在低头看手机。
 
     买一送一，关顾下大背头的课堂吧。
-    
-    新鲜劲一过，大多数人重新低下了头，像是一头头被自愿扣上鼻环的水牛。
 
     {clear}
     
@@ -1216,19 +1201,6 @@ label FATE:
     
     宇宙本不均衡、不对称，现充的世界就交给现充吧。
     """
-
-    play music "music/devil whisper.mp3" fadeout 1.0 volume 0.75
-
-    $ renpy.notify("🎵正在播放：『Devil's whisper』")
-
-
-    """
-    ——那双眼睛，是谁的眼睛……？
-
-    不知怎地突然想到这句话，我心里掠过一丝不安。
-    """
-
-    stop music fadeout 1.0
 
     C "人类世正在两种未来间……"
 
@@ -1251,6 +1223,7 @@ label FATE:
     """
 
     $ renpy.notify("💡Tip：“笔电男大”已添加至词典")
+    $ unlock_tip("笔电男大")
 
     """
     ↑ 笔电男大的丑态。
@@ -1360,7 +1333,7 @@ label FATE:
 
     window hide
 
-    show rindo amazed at truecenter
+    show lindu amazed at truecenter
     with dissolve
 
     r "哇呜～？今天意外地主动诶。"
@@ -1369,7 +1342,7 @@ label FATE:
 
     adv "被半生不熟的人们嫌弃了好多次呢。"
 
-    hide rindo amazed with dissolve
+    hide lindu amazed with dissolve
 
     r "我就知道。果然没有我就是不行呀～☆"
 
@@ -1441,10 +1414,12 @@ label FATE:
     """
 
     $ renpy.notify("💡Tip：“人人点评”已添加至词典")
+    $ unlock_tip("人人点评")
 
     with Pause(0.5)
 
     $ renpy.notify("💡Tip：“米团”已添加至词典")
+    $ unlock_tip("米团")
 
     "顺带一提，点餐是在她指导下跟她分头在人人点评和米团找对应的代金券和团购对比出的最优解，匪夷所思的是最后居然还被她神经大条地教育一顿“跟别的女孩子出门吃饭不要这样子喔”……"
 
@@ -1459,7 +1434,7 @@ label FATE:
 
     这句话终于把我拉回了思绪。
 
-    无视掉老登回头的警告和大背头对着我们不明所以的笑，我深感都是自找的：
+    无视掉老登回头的警告，我深感都是自找的：
     
     也是这句话，稍稍地让我感到有点寂寞。
     """
@@ -1541,10 +1516,12 @@ label FATE:
     stop music fadeout 1.0
 
     $ renpy.notify("💡Tip：“中二”已添加至词典")
+    $ unlock_tip("中二")
 
     with Pause(0.5)
 
     $ renpy.notify("💡Tip：“尴尬癌”已添加至词典")
+    $ unlock_tip("尴尬癌")
 
     """
     {clear}
@@ -1559,6 +1536,7 @@ label FATE:
     """
 
     $ renpy.notify("💡Tip：“Docker”已添加至词典")
+    $ unlock_tip("Docker")
 
     """
     就像程序员不仅要在自己的环境下跑通程序，在其他运行环境下也得保证其正常运行一样——希望地球ＯＬ尽早实装Docker——
@@ -1829,32 +1807,35 @@ label FATE:
     "登上这段阶梯。"
 
     "我走完了最后这段孤身一人的５０米。"
-    $ persistent.music_room_active = True
+
 
     window hide
     $ quick_menu = False
+    $ persistent.music_room_active = True
 
     show chapter2 complete at truecenter
     with dissolve
     $ renpy.pause(5.0, hard=True)
 
-    hide text with dissolve
+    hide chapter2 complete with dissolve
     with Pause(1)
 
-    if renpy.confirm("你现在可以通过标题界面的“鉴赏”按钮\n回顾已收集的歌曲。\n{size=-3}（按下“确认”继续下一章节，按下“取消”返回标题界面）{/size}"):
+    if persistent.game_completed:
+        stop music fadeout 2.0
+        stop sound
+
+        $ quick_menu = True
+    elif renpy.confirm("你现在可以通过标题界面的“鉴赏”按钮\n回顾已收集的歌曲。\n{size=-3}（按下“确认”继续下一章节，按下“取消”返回标题界面）{/size}"):
         stop music fadeout 2.0
         stop sound 
+        
         $ quick_menu = True  
     else:
         stop music fadeout 2.0
         stop sound
 
-        if persistent.game_completed:
-            scene end menu 
-            with dissolve
-        else:
-            scene bg shady 
-            with dissolve
+        scene bg shady 
+        with dissolve
         $ renpy.pause(2.0, hard=True)
         $ quick_menu = True 
         return
@@ -1908,6 +1889,7 @@ label HACKER:
     adv "……"
 
     $ renpy.notify("💡Tip：“领域展开”已添加至词典")
+    $ unlock_tip("领域展开")
 
     w "相信爸爸，这次一定……领域展开！"
 
@@ -1970,6 +1952,7 @@ label HACKER:
     adv "她的手指指着一个图标。"
 
     $ renpy.notify("💡Tip：“洋葱路由”已添加至词典")
+    $ unlock_tip("洋葱路由")
 
     w "Tor浏览器，与一般的浏览器不太一样，采用洋葱路由流量的方式进行加密连接，配合俄罗斯的SMS-Activate可以实现几乎完全匿名的上网噢。"
 
@@ -1978,6 +1961,7 @@ label HACKER:
     adv "江恬歪着头。"
 
     $ renpy.notify("💡Tip：“渗透测试”已添加至词典")
+    $ unlock_tip("渗透测试")
 
     w "蚁剑和冰蝎。用来做渗透测试……"
 
@@ -2026,7 +2010,7 @@ label ADULT:
 
     window hide
 
-    show rindo shy at truecenter
+    show lindu shy at truecenter
     with dissolve
 
     w "美少女的包袱呢？"
@@ -2046,7 +2030,7 @@ label ADULT:
 
     adv "林笃害羞地抓起一个枕头就朝我扔了过来。"
 
-    hide rindo shy with dissolve
+    hide lindu shy with dissolve
 
     adv """
 
@@ -2125,32 +2109,34 @@ label ADULT:
     adv "我悄悄松口气，放下心来。"
 
     adv "今天的晚饭，就由我来做吧。"
-    $ persistent.dictionary_active = True
 
     window hide
     $ quick_menu = False
+    $ persistent.final_unlocked = True
 
     show chapter3 complete at truecenter
     with dissolve
     $ renpy.pause(5.0, hard=True)
 
-    hide text with dissolve
+    hide chapter3 complete with dissolve
     with Pause(1)
 
-    if renpy.confirm("你现在可以通过标题界面的“词典”按钮\n回顾已收集的Tips。\n{size=-3}（按下“确认”继续下一章节，按下“取消”返回标题界面）{/size}"):
+    if persistent.game_completed:
         stop music fadeout 2.0
         stop sound
+
+        $ quick_menu = True
+    elif renpy.confirm("最终章已解锁。在此之前的一个小小提示：\n在你所不留意的角落或许藏着什么。\n{size=-3}（按下“确认”继续下一章节，按下“取消”返回标题界面）{/size}"):
+        stop music fadeout 2.0
+        stop sound
+        
         $ quick_menu = True     
     else:
         stop music fadeout 2.0
         stop sound
 
-        if persistent.game_completed:
-            scene end menu 
-            with dissolve
-        else:
-            scene bg shady 
-            with dissolve
+        scene bg shady 
+        with dissolve
         $ renpy.pause(2.0, hard=True)
         $ quick_menu = True 
         return
@@ -2159,9 +2145,9 @@ label SEX:
     scene bg r18 
     with fade
 
-    play music "music/white.mp3" fadein 2.0 fadeout 2.0 volume 0.75
+    play music "music/winter.mp3" fadein 2.0 fadeout 2.0 volume 0.75
 
-    $ renpy.notify("🎵正在播放：『white』")
+    $ renpy.notify("🎵正在播放：《冬》")
 
     r "简直是虐待……我说啊……呜，第一次就尝试这种姿势真的没关系么？"
 
@@ -2239,1068 +2225,6 @@ label SEX:
 
     """
 
-    stop music fadeout 2.0
-
-    scene black
-    with fade
-    with Pause(2)
-
-    $ _game_menu_screen = None
-    $ movie_length = 117
-    $ skip_hide = 5.0
-
-    if renpy.variant("pc"):
-        $ movie_playing = "video/PC/R_ed.webm"
-    elif renpy.variant("mobile"):
-        $ movie_playing = "video/Android/R_ed.webm"
-
-    call screen movie with dissolve
-
-    $ _game_menu_screen = 'save'
-
-    if renpy.confirm("注意：前方是一个HS。欢迎在公开场合展示。\n（按下“确认”继续游戏。按下“取消”跳过HS。）"):
-        pass
-    else:
-        jump end  
-
-    scene bg night 
-    with fade
-
-    play music "music/obituary.mp3" fadeout 2.0 volume 0.75
-
-    $ renpy.notify("🎵正在播放：Obituary")
-
-    r "……嗯？欸欸欸！不会吧……"
-
-    w "怎么了？"
-
-    adv """
-    林笃拼命翻着自己的小包。
-
-    无果。
-
-    她带着哭腔说：
-    """
-
-    r "我好像忘记带钥匙了……"
-
-    w "啊？"
-
-    adv """
-    因为只有我们两人回来而且两条懒狗不都想提着大箱小箱坐大巴，所以我们带去老家的换洗衣物和生活用品都丢给了各自的爸妈让他们回深时顺便再带走。
-    
-    本着“反正家里有，不够也可以再买”的想法，可以说，我们跟只带了个人回深圳没什么区别。
-
-    我替林笃着急起来：
-    """
-
-    stop music fadeout 2.0
-
-    w "你们家有那种藏在地毯或花盆底下的紧急钥匙吗？"
-
-    r "没有。"
-
-    w "那赶紧给你爸妈打个电话问问他们怎么办吧？"
-
-    adv """
-    林笃从裙子的口袋里拿出手机来。
-
-    我们是下午坐的车，冬天的天本就黑得早，等我把林笃送到家门口更是已经晚上九点钟了。
-
-    我只穿了一件衬衣，外加一件外套，晚风吹过，凉飕飕的，让我直打哆嗦。
-    """
-
-    r "对啊对啊……这可怎么办啊——"
-
-    r "啊？不行的啦，哪有那么多钱……"
-    
-    adv "盯着林笃裙下的过膝袜，在内心吐槽着“怎么从来不见她觉得这样会冷呢”时，我猛地突然想到——"
-
-    play music "music/obituary.mp3" fadeout 2.0 volume 0.75
-
-    $ renpy.notify("🎵正在播放：Obituary")
-
-    w "来我家住不就行了吗？"
-
-    adv """
-    林笃的脸从手机转向我——
-
-    我突然才意识到自己说了什么！
-
-    半夜叫女孩子到自己家里住不就是那个意思么……？
-
-    即使是青梅竹马也太……
-
-    我的心脏扑通扑通地跳，连声音都不自觉变得高昂起来：
-    """
-
-    w "不对不对不对！我不是那个意思！你知道的！你看，你、你不是在我家里放放放过好几套衣服么！可以换洗的！两个人吃起饭来也方便对不对！"
-
-    stop music fadeout 2.0
-
-    play music "music/happiness is everywhere.mp3" fadein 2.0 fadeout 2.0 volume 0.75
-
-    $ renpy.notify("🎵正在播放：『Happiness is everywhere』")
-
-    adv "不过内衣内裤只能麻烦她现买现穿了。"
-
-    adv "没想到林笃真的就这么跟叔叔阿姨说了，然后向我比了个OK的手势。"
-
-    window hide
-
-    show rindo ok at truecenter
-    with dissolve    
-
-    adv "OK吗……？"
-
-    adv "刚才好像从电话里听到了叔叔的哭声，嗯，一定是幻听。"
-
-    hide rindo ok with dissolve
-
-    """
-    {clear}
-
-    我们是纯洁的男女交情。
-
-    为了掩盖自己的慌慌张张，我低下头去给爸妈发起消息。
-
-    妈妈第一个回了我的消息：“可以拿你衣柜里她的衣服给她穿哟。”
-
-    ——她老人家什么时候知道的！
-
-    爸爸接在后面：“好的好的，我们保证在老家有多久待多久！”
-
-    ——好想撞墙！
-    """
-
-    adv "等我发完消息抬起头来，林笃好像还在跟她妈妈说着什么。"
-    
-    adv "耐心地等了她一会儿，只见她低着头小小声地说："
-
-    r "那……那我们走吧？去、去……你家。"
-
-    adv """
-    不知道自己是怎么回的家。
-
-    唯一清楚地记得的就是：牵着林笃的手时，我感觉自己的手都在发烫，一点也不冷了。
-
-    清醒点许○○！
-    """
-
-    play music "music/play with.mp3" fadein 2.0 fadeout 2.0 volume 0.75
-
-    $ renpy.notify("🎵正在播放：『うまくいくかね？』")
-
-    adv """
-    林笃说不定本人根本没那个意思呢！
-
-    她睡爸妈的床，或者我把床让给她自己睡地铺或者沙发也完全可以吧！
-
-    唯独这个时候我痛恨起自己不是现充。
-
-    如果是现充的话，一定会更加游刃有余地处理这件事。
-
-    对啊！
-
-    说不定，在他们现充的世界，女生留宿男生家里是再正常不过的事呢！
-
-    我又一次痛恨起自己非现充的阴湿妄想。
-
-    结果，回到房间把她的衣服找出来递给她，接着我开始翻起自己的衣服来。
-    
-    像是听错了一样，林笃扭捏着说：
-    """
-
-    scene bg dorm 
-    with dissolve
-
-    r "哈、哈……好久没一起睡了呢。"
-
-    adv """
-    然后转眼间林笃就跑开了，丢下一句“我去洗澡啦～”和原地苦苦思索的我。
-
-    这、这是什么意思啊！
-
-    她想做吗！
-
-    她的贞操是我这种人可以收下的吗！
-
-    不对不对不对！
-
-    说不定她只是单纯感叹一下呢！
-
-    我们确实是好久没在一起睡了……上次一起睡……还是在初中她叫我去上学时。
-
-    自那以后林笃的爸爸就对自己的女儿严防死防，说什么也不愿意林笃在我家待到晚上超过9点。
-
-    还是不对！
-
-    无论怎么想她在这种情境下的潜台词都是“今晚我想跟你一起睡吧”！
-
-    如果在这种时候表现得太软弱一定会让她失望的。
-
-    可如果在她完全没那个意思的前提下强行推倒她反而让她生气了怎么办啊！
-
-    现实里可不会有女生土下座对你说“请收下我的处女”啊啊啊啊啊！
-
-    傻逼galgame！傻逼galgame!!傻逼galgame!!!
-
-    我躺在自己的床上看起天花板的污渍来——为什么这种事情是男方在做啊？
-
-    此时，我想起天文台上的小小死神对我说的“真是废废的呢”。
-
-    傻逼galgame!!!！傻逼galgame!!!!!傻逼galgame!!!!!
-
-    想点别的吧……
-
-    我抬头望去，才发现林笃不知什么时候把我找出的她的所有衣服都整整齐齐地挂了起来，全是正装，甚至还有她的高中校服。
-
-    一想起穿着这些衣服待在我家里的她，我就硬了起来……
-
-    我把头埋进枕头里一遍又一遍地背诵化学元素周期表：
-
-    氢氦锂铍硼碳氮氧氟氖钠镁铝硅磷硫氯氩钾钙后面是什么忘了我只会背前20号啊……
-
-    ——爸爸妈妈叔叔阿姨都不在的日子里即使真透不到，偷偷对她做些什么也不会被发现吧？比如这个时候趁她在洗澡偷偷去看她隔着磨砂浴室门和着雾气若隐若现的身影做小菜或者干脆趁她睡着时摸一摸她……
-
-    一想到这都不止是硬甚至感觉都快滴下来了……
-
-    为什么我可以这么下头！脑里除了这些黄色废料没有别的了吗！
-
-    H He Li Be B C N O F Ne Na Mg Al Si P S Cl Ar K Ca一一得一一二得二一三得三一四得四不行太简单了二二得四二三得六七七四十九富强民主文明公正法治敬业友善马克思主义具有科学性人民性时代性开放性……
-
-    ……什么是性人民、性时代和性开放？
-
-    我对准自己来了一拳！
-
-    我大头带着整个人瘫在了床上，斜眼一看，唯一精神不减只有下面的小头。
-
-    林笃恰好在这个时候探了个头进来：
-    """
-
-    r "我洗好啦～"
-
-    play music "music/a little happiness.mp3" fadein 2.0 fadeout 2.0 volume 0.75
-
-    $ renpy.notify("🎵正在播放：『A little happiness』")
-
-    adv """
-    隔着那么远我好像都闻到了她身上的香甜……
-
-    被她看到就全完了。我连忙坐起来，尽量调整成一个她那个角度看不到的位置。
-    """
-
-    w "好……好，我待会儿就去洗。"
-
-    adv """
-    她离开后，我才爬起来弯着腰进了浴室。
-
-    ……
-
-    洗完了澡。把换下的衣裤往洗衣机一丢，我便找起枕头跟被子来。
-
-    我们家好像没有多的棉被啊……要不就用爸爸妈妈床上的被子好了……
-
-    抱着一大团被子（上面顶着个枕头）走进客厅，我问林笃：
-
-    """
-
-    w "那个……今晚你想在哪儿睡？客厅？或者，我房间？"
-
-    adv """
-    这是我留的一个小心眼。
-
-    一语双关。
-
-    毕竟“睡我房间”也可以理解成“我睡客厅她睡我房间嘛”！
-
-    当然没有指望她会选择后者，但通过这几个字，既能流露出邀请共夜的意思，同时向她有力地证明了我不是有色无胆的小鬼。
-
-    不错。我真聪明。
-    """
-
-    r "我睡你房间啦～"
-
-    stop music fadeout 2.0
-
-    adv """
-    !!!
-
-    我差点没把被子掉到地上。
-
-    现在这个双关难题抛给了我：她理解的到底是哪层的意思？
-
-    镇定。镇定。
-
-    林笃看着我的眼睛等待着回答。
-    """
-
-    w "啊、啊哈哈哈……好好好，那我睡客厅啦～"
-
-    r "诶？你不睡自己房间吗？"
-
-    adv "她也感到有点不好意思似的，把头埋下去，用脚在地板上画着圈。"
-
-    r "……被子一条就够了。"
-
-    nvl clear
-
-    """
-    直至此刻，我终于确信了。
-
-    恋爱漫画为了应对长期连载往往会采取“迟钝木头人男主”策略。
-
-    我算迟钝那种类型吗？
-
-    自以为不算吧。
-
-    如果对心意已经察觉到这一地步，继续装傻下去连我自己都会瞧不起。
-
-    ……
-    """
-
-    scene black with dissolve
-
-    play music "music/white.mp3" fadein 2.0 fadeout 2.0 volume 0.75
-
-    $ renpy.notify("🎵正在播放：『white』")
-
-    adv """
-    熄灯前，我们聊了很久的天。
-
-    一熄灯，黑暗中的窸窣声使我兴奋难耐。
-
-    与我同睡一张床、与我同盖一条被子的女孩是多么令人怜爱。
-
-    一上床就开搞不太好吧……？
-
-    但这种时候男生就该主动并且强硬一点吧？
-
-    我心一横，下定了决心：再过十秒就动手。
-
-    十秒够长了。
-
-    我的手伸向她的腰间。
-
-    她的温度透过我的指尖传了过来。
-
-    林笃轻轻地颤抖了一下，没出声。
-
-    林笃从我这儿换上的都是她平常穿在外面的衣服，哪有什么睡衣。
-
-    一想到马上可以玷污平常装扮的她，我的手不禁在她身上大胆地游走起来：
-
-    先向下顺着裙褶摸上她的大腿根，轻抚着她过膝袜包裹的小腿。既柔软又富有弹性。
-
-    在要不要顺势摸向她的内裤这件事上时，我犹豫了一下——会不会太快了？
-
-    于是我决定转而对她的胸部下手。
-
-    我的手慢慢地向上滑去。
-
-    林笃轻轻地松了一口气，随之马上发出一声小小的惊叫——
-
-    我的左手此时已经攀上曲线的峰尖，隔着衣服蹂躏起她的小馒头来。
-
-    刚被左手换下的右手不敢闲着，揉捏她的屁股。
-
-    她的喘息越来越急促，我的兽性也愈发膨胀：
-
-    好想、好想赶紧把我的东西插入她的体内……
-
-    单是、单是想到与自己朝夕相处的青梅竹马从所未有紧密地结合在一起，理智就已经快要崩溃……
-
-    我爬了起来退到床尾，眼睛努力地适应着黑暗，粗暴地把她的腿分开一些。
-
-    好……好色情啊这个姿势……！
-
-    解开裤子，我的家伙弹了出来，蹭着她湿漉漉的内裤磨擦起来。
-
-    进一步地，我前倾身子，牢牢压住了她。
-    
-    影子逐渐罩住她又兴奋又紧张的脸。
-    
-    小鸡啄米似地一亲完，两手肆意玩弄着她胸前的柔软。
-
-    身下不时漏出她的娇声。
-
-    没有人会来这里。
-
-    今晚林笃身体的主权属于我。
-
-    所以可以尽管安心地做到最后。
-
-    比一步之遥更短。
-
-    我咽下口水，屏住呼吸。
-
-    一定要优雅……
-
-    勾住她裙下内裤的边缘……
-    """
-
-    stop music
-
-    r "哇哇哇——！哇呜呜呜……"
-
-    adv """
-    林笃猛地坐了起来，惊慌地挣脱我的手。
-
-    我也吓了一跳，连忙把手抽开。
-
-    灯啪地打开了。
-    """
-
-    scene bg dorm 
-    with dissolve
-
-    w "对、对不起！我……我以为……"
-
-    adv "出乎意料地，感到悔恨的是林笃一边。"
-
-    r "没、没有啦！该说对不起的是我、我才对……我一紧张就想上厕所……就是……就是说突然觉得好害羞啊……"
-
-    adv """
-    随着眼睛逐渐适应灯光，我看到她红彤彤的脸，还有那略显凌乱的衣服。
-    
-    就像……就像被偷吃了两口的奶油蛋糕。
-    
-    按耐住自己扑倒她大快朵颐的冲动。
-    """
-
-    w "错在我。是我太急了。"
-
-    adv "我翻身下床。"
-
-    w "对不起。今晚我还是睡客厅吧。"
-
-    play music "music/white.mp3" fadein 2.0 fadeout 2.0 volume 0.75
-
-    $ renpy.notify("🎵正在播放：『white』")
-
-    adv "我的衣角被拉住，那惹人怜爱的声音从身后传来："
-
-    r "不、不行的啦！就要今晚。我想，今晚，我就想做到最后！"
-
-    w "欸？"
-
-    adv "我摸了摸她的头，毛茸茸的。"
-
-    w "会很痛的哦？"
-
-    adv "林笃点了点头。"
-
-    w "一辈子就一次喔？"
-
-    adv """
-    林笃更加用力地点下了头。
-    
-    我明白她的心意了。
-    """
-
-    w """
-    那再确认一遍——
-    
-    老实说，我想要你。
-
-    想要得不得了。
-
-    但是这种事你不同意是不行的。
-
-    你确定要被我……
-
-    呃，被、被我刺穿吗？
-    """
- 
-    adv """
-    真是一点也不帅气的台词。
-    
-    不过我想，那种王道的耍帅time在我身上恐怕一辈子也不会有吧。
-    """
-
-    w """
-    我从来不觉得自己是什么好人……
-
-    自私、又小心眼，遇到难事就想逃避……
-
-    可以说是一定做不成什么惊天动地大事的人。
-
-    跟着我，不过苦日子，过的也一定不是什么轻松日子……
-
-    但我发誓：
-
-    我们两人小小的幸福，像蒲公英一样的幸福，我会竭力守护。
-
-    唯独这件事上，我绝不含糊。
-
-    等到我们老了以后，再带你一起去看我们曾种下的小小的幸福。
-
-    一定会见到用我们两人的手都合不拢的幸福那一天，一定。
-
-    你……你觉得呢？
-    """
-
-    adv """
-    说完，我的脸红想必不输眼前这个女孩。
-
-    林笃坐起身来，手夹在两腿间。扭扭捏捏的。
-    
-    好像能看到她身后一摆一摆的狗尾巴。
-    """
-
-    r """
-    嗯……我相信你。
-    
-    我们一起努力。
-    
-    倒不如说，我……
-
-    我可以吗……？
-    """
-
-    adv """
-    你当然可以。
-
-    我将柔软的她紧紧地拥入怀中。
-
-    夜晚才刚刚开始。
-
-    我眨了眨眼睛。
-    """
-
-    w "另外，我想到怎么让你不害羞了☆"
-
-    adv """
-    我凑到她耳边悄悄告诉了她。
-
-    林笃鼓着脸说：
-    """
-
-    r "……变态。色狼——！"
-
-    scene bg sex
-    with dissolve
-
-    adv """
-    ……
-
-    感谢前人的智慧（主要是galgame）。
-
-    浴室当然不止可以用来洗澡啦☆
-    
-    我一边哼哧哼哧地扒着她的衣服一边问：
-    """
-
-    w "有决胜内衣吗？"
-
-    r "那种东西才没有啦！"
-
-    w "安全期OK？"
-
-    r "O……OK！"
-
-    adv "估计是觉得自己不能再害羞下去了吧，她又调皮地补上一句："
-
-    r "做完记得给我一千块哦。"
-
-    adv "只要一千块就可以把她抱回家随便艹吗！"
-
-    w "好啦好啦，弯腰～"
-
-    r "……变态、色狼。"
-
-    adv """
-    从她身后解开胸前的领结、衣扣和内衣，露出她雪白的肌肤、锁骨和胸部。
-
-    林笃的手抱紧了跟前的水管。
-
-    我的手扶上了她的腰。
-    """
-    
-    r "哇呜～好像小狗啊……"
-
-    w "嗯嗯，而且是毛都没长齐的小狗喔。"
-
-    adv """
-    字面意思。
-
-    粉红到光滑，或者说光滑到粉红。
-
-    我早该知道。一如最初的妄想。
-    """
-
-    r "简直是虐待……我说啊……呜，第一次就尝试这种姿势真的没关系么？"
-
-    w "我也很紧张啊……但不是你说的‘太害羞了，没办法直视你的脸’嘛。"
-   
-    r "那、那我可以躺下去然后像这样子用胳膊遮住脸不是么？"
-
-    w "不要。那样和用杯子有什么区别。天花板的污渍看不了可以看洗手台的污渍嘛。"
-
-    r "唔……我不是很懂男生的喜好这些……但要是你能因此变得舒服一些的话……我会努力！"
-
-    w "马上会让你舒服起来的。很快。"
-
-    r "啊……嗯，你看你脸都红透了……"
-
-    w "还好意思说。你不也是。"
-
-    adv """
-    像揭开西餐的圆顶菜罩一样，我轻轻掀开了林笃的裙子。
-    
-    所谓“绝对领域”正一览无疑在我眼前。
-
-    解开自己的裤子。滚烫的肉棒一下弹了出来。
-
-    林笃没有回应就是最好的回应。
-
-    经过刚才那一遭，我决定不脱她内裤了——
-
-    中出当然还是要中出的，而是我觉得扒开内裤到一边再插入更色情！
-
-    白色的内裤别到一边，半遮半掩的阴部呈现出健康的粉红色。
-    
-    有点像拨开糯米鸡最后一层荷叶露出热腾腾的糯米那种感觉。
-
-    真的是非常、非常可爱……
-    """
-
-    w "那个……我进去啦？"
-
-    r "进来吧……"
-
-    adv """
-    事后我总想，这种时候是不是该回一句“烦扰了”“我开动了”？
-
-    不过那时我的家伙迫不及待地凑上前去就要厚乳。
-
-    原本想多多在洞口滑润滑润，但显然是她一开始就太滑润了，一个不留意，顶端已经探了进去。
-
-    那我也不客气了。
-
-    正当我慢慢插进去时，她冷不防地喊了一句“【一库|いく】哟☆”。
-    """
-
-    w "……"
-
-    r "哇呜～怎么一点反应都没有！"
-
-    w "你在干嘛。"
-
-    r "想让你更精神一点。"
-
-    w "萎了。"
-
-    r "什么——！"
-
-    adv """
-    她生气地转过头来，但一看到自己的屁股又害羞地转了回去，只好在另一头气鼓鼓地叉着双手生闷气。
-
-    索求着更多的快感，我向深处刺去。
-    
-    血流了出来。
-    """
-
-    w "痛吗？"
-
-    adv "我看到她明明在那一瞬痛得闭上了双眼，还是在逞强地说："
-    
-    r "不如我自己来。"
-
-    w "我也感觉你还不如杯子。"
-
-    adv """
-    这下完全惹恼她了。
-    
-    虽然不知道她想做什么，但我的身体先一步强硬地做出了反应。
-
-    ……把娇小的她从后面抱起来回地抽插。
-
-    ……进进出出。
-
-    ……每一下都直抵花心。
-
-    ……就像真的在用杯子一样。
-
-    ……妄想中最适合我的通道。
-
-    ……每一处湿润、每一道褶皱。
-
-    ……既温暖又柔软。
-
-    ……那可是你从小看着长大的青梅竹马哟？
-
-    ……而你现在肿胀的阳具在她紧缩的阴道里。
-
-    ……粗暴地横冲直撞。
-    """
-
-    r "啊啊啊好舒服……你在干嘛……脑子都变得不清醒了快、快停下来啊我说……！要要要……呼，哎？我、我……"
-
-    w "不行不行……快快快出来了……诶——你干什么!?"
-
-    adv """
-    林笃在半空中挥舞着的脚忽地踩中了我！
-
-    于是，失去平衡的两人（还是说处于结合状态的两人应该算作一个人？）向后倒去——
-
-    屁股结结实实地接触到了地板。
-
-    这算好的。
-    """
-
-    menu:
-        "外射":
-            adv """
-            外射是坏文明。
-
-            有得内射不外射的都是猴子。
-            
-            没错，只有野蛮的猴子才外射。
-
-            我就内射。
-            """
-        "内射":
-            pass
-
-    show sex
-    $ renpy.pause(1.0, hard=True)
-    hide sex
-
-    play music "music/what comes into being.mp3" fadein 2.0 fadeout 2.0 volume 0.75
-
-    $ renpy.notify("🎵正在播放：『What comes into being』")
-
-    adv """
-    受到这个刺激，积攒于体内深处的【浊|灼】液在仿佛触电的那一瞬释放。
-
-    我紧紧地从后面抱住了林笃。
-
-    温温热热的。
-
-    将她染上我的颜色。
-    """
-
-    r "欸欸欸欸？啊——还在……"
-
-    adv """
-    潮水退去。
-    
-    他仍在抖动。
-    """
-
-    r "哇呜～"
-    
-    adv "林笃的身体一下软了下来。"
-    
-    r "原来是这种感觉啊～"
-
-    adv "林笃终于如愿以偿地转过头来。"
-
-    w "如果可以，我真想舔遍你全身。"
-
-    r "我是臭的。"
-
-    w "林笃才不臭，林笃是香的。"
-
-    adv "这不是情话。才洗过澡。"
-
-    w "……又硬了。"
-
-    r "诶？"
-
-    w "看到你刚才被我灌满……"
-
-    r "那、那就再？继……"
-
-    w "不知不觉就……对了，现在你那儿还在往下滴……"
-
-    r "不用形容也可以！"
-
-    w "那更是仙露。"
-
-    nvl clear
-
-    "在做的过程中，林笃突然想尿尿。"
-
-    "因为浴室和厕所是一体的，我使了坏心眼，不让她去。"
-
-    adv """
-    反而抬起林【笃|do】一条腿，从后面对准她的花蕊一顿加速摆腰大do特do。
-
-    两颗圆鼓鼓的睾丸挤在她的屁股和我的胯下间来回地碰撞。
-
-    好满足。
-
-    仿佛整个人只剩下了下半身。
-
-    在那征服感的尽头，我一把推进至最深处。
-
-    """
-    w "好、好紧……要射了……！"
-    
-    r "不、不要啊噢……好羞的！诶诶诶，那么深我真……真的会尿出来的羞死了……"
-
-    adv "嘴上连连喊着“不要”“羞死了”，但林笃那秘密花园小径的内壁却诚实地紧缩起来。"
-
-    adv """
-    强忍的尿意。
-
-    强烈的快感。
-    
-    于是在这双重压力下，林笃再也憋不住了。
-
-    一阵痉挛后，林笃达到绝顶的同时还有失禁：
-    """
-
-    r "我不想尿……哦哦齁快快快拔……啊——不要、不要看——！"
-
-    adv "我也再憋不住了。"
-
-    show sex
-    $ renpy.pause(1.0, hard=True)
-    hide sex
-
-    adv """
-
-    一份雪白的泡芙。
-
-    以及在灯光的反射下，一条优美的抛物线。
-
-    我是满足了，但确实是有点欺负过头了，随后在安慰林笃时花了好大功夫。
-
-    ……
-
-    总之在不知道多少回的“喷汁-爆浆”循环后。
-
-    林笃维持着原来的姿势坐在我大腿间。我精疲力尽地坐在地板上。
-
-    冰冰凉凉的。
-
-    以及与我的臭相中和的她的香气。
-
-    刚刚冷静了一会儿，像又想起什么似的，林笃用带着哭腔的声音又气又恼地说：
-    """
-    
-    r "别人的初体验……才……才不是像我们这样吧！"
-
-    adv "抚摸着她软软的头发。"
-    
-    w "这才像我们不是么？"
-
-    w "今后也会有很多很多和别人‘不一样’的地方。我们是世间任何人都无法复刻的、最好的青梅竹马、男女朋友、终身伴侣。"
-
-    r "又被你骗了……你老这样……"
-
-    w "就是因为会有很多‘不一样’，所以……所以今后的岁月里……还请多多关照。"
-
-    r "……请多多关照。"
-
-label end:
-    scene black 
-    with fade
-
-    adv """
-    回到床上睡觉时，已经是凌晨1点。
-
-    腰好酸。下体还残余着些许热量。
-
-    好没有真实感。
-    """
-
-    w "抱抱～"
-
-    r "不让大色狼抱。"
-
-    adv """
-    林笃把头缩进被子里不让我抱。
-    
-    我钻进了被子里。
-
-    林笃想逃，用脚拼命蹬着我。
-
-    我在黑暗中胡乱抓住她的一条腿向我这边拉。
-    """
-
-    r "哇哇哇——"
-
-    w "抓住你啦。"
-
-    adv """
-    玩乐够了，我们交换了一个吻，重新躺下去。
-
-    刚躺下去，林笃事后羞耻来了，绕着弯问我：
-    """
-
-    r "今天，啊不，昨天我被男人进入了……"
-
-    adv "我静静地听她说话。"
-
-    r "明明小时候感觉也没多大的，今天却胀得那么大……还被他一下捅到最里面……"
-
-    w "现在还痛吗？"
-
-    r "嗯……有一点点。明天不想出门了，走起路来怪怪的。"
-
-    adv "沉默了一会儿。"
-
-    r "你喜欢我吗？"
-
-    w "最喜欢了。"
-
-    r "那爱呢？"
-
-    w "也最爱了。"
-
-    r "有多爱？"
-
-    w "从这里到月球，再从月球回到这里。就有这么爱。"
-
-    r "……"
-
-    w "放心吧。宅宅们都是很专一的。"
-
-    r "胡说。一天换一个老婆叫专一吗？"
-
-    window hide
-
-    show rindo jealous at truecenter
-    with dissolve
-
-    nvl clear
-
-    "我搂住她。"
-
-    play sound "wind.wav" volume 0.75
-
-    """
-    屋外的冬风呼呼地刮过窗子。
-    
-    而我在温暖的被窝里，在林笃温暖的拥抱里。
-    
-    好安心的感觉。
-    
-    与此同时，裤裆又挺了起来，不安分地蹭到了她的裙子。
-    """
-
-    hide rindo jealous with dissolve
-
-    w "你要是不信，我不介意往你深处再注入一波浓厚的爱。"
-
-    r "欸——不要啦——！"
-
-    adv """
-    可能女孩子就是这样吧。
-    
-    在我快要睡着时，林笃忽然又说：
-    """
-
-    r "……接下来的话我不是在开玩笑哦？喂喂……你有在听吗？"
-
-    w "在。"
-
-    r "我会读心。"
-
-    w "哦。"
-
-    r "欸？是真的读心哦？像超能力一样的那种哦？只要看到眼睛或者有身体接触就能读到别人所有内心想法那种哦？"
-
-    w "现在我知道为什么在厕所时你那么配合了。原来是因为在你那儿插……"
-
-    r "哇呜～停停停！为什么你不感到意外啊？"
-
-    w "怎么说呢……一种“我早该知道”的感觉嘛。"
-
-    adv """
-    我翻了个身。
-
-    毕竟最初妄想是以“那个角色”为原型创造的嘛。
-
-    不过听描述似乎与“思考盗摄”也有一点不一样。
-
-    不重要了。重要的是——
-    """
-
-    w "就算你会读心也没什么呀。毕竟我喜欢的就是林笃嘛。从头到脚一整个的林笃嘛。"
-
-    r "真狡猾……"
-
-    w """
-    不如说，会读心是一件很辛苦的事。
-
-    人心的许多想法是不能窥视的。
-
-    一旦借读心这么“方便”的能力暴露在阳光下，受伤的只会是你自己吧？
-
-    心中苦闷，又无处述说。
-
-    你真的已经很努力了……
-
-    辛苦了。真的。
-    """
-
-    r "嗯……嗯！应该是辛苦你陪我胡闹。"
-
-    window hide
-
-    show rindo satisfied at truecenter
-    with dissolve
-
-    adv "安心下来，林笃伸了个懒腰打着哈欠："
-
-    r "明天早上，我要吃～肠～粉～♪"
-
-    hide rindo satisfied with dissolve
-
-    nvl clear
-
-    scene bg family
-    with dissolve
-
-    play music "music/sky.mp3" fadein 2.0 fadeout 2.0 volume 0.75
-
-    $ renpy.notify("🎵正在播放：『空を見上げて』")
-
-    """
-    第二天早。
-    
-    算是林笃与我同居的Day 1 吧。
-
-    林笃叫醒了我。
-
-    等到我睡眼惺忪地从房间走到客厅，她已经刷完牙，正在检查洗衣机。
-
-    见到我，她有点不平地说：
-    """
-
-    r """
-    我现在终于明白为什么爸爸告诉我要提防跟男孩子睡觉了——
-
-    因为你睡觉一点都不老实！
-
-    半夜老对我动手动脚。
-    """
- 
-    w "嘿嘿嘿……"
-    
-    adv """
-    真的忍不住。
-    
-    每次一睁眼，就从下半身升起一股欲火。
-    
-    只要同床看到她那可爱的脸蛋和身体，就好想要……
-
-    我的回味马上被这只粉毛狐狸精打断了：
-    """
-
-    r "这是你的内裤吗？为！什！么！要把内裤放进洗衣机啊——！"
-
-    adv "看来同居生活没那么顺利。"
-
-    adv "我早该知道。"
-
-    hide rindo angry with dissolve
-
     window hide
     $ quick_menu = False
 
@@ -3313,75 +2237,26 @@ label end:
 
     scene black
     with fade
-
-    play music "<from 31>music/last lament.mp3" fadein 5.0 volume 0.75
-
-    $ renpy.pause(2.0, hard=True)
-
-    $ renpy.notify("🎵正在播放：『Last Lament』")
-    
-    show text "感谢你能玩到这里。" with dissolve
-    $ renpy.pause(2.0, hard=True)
-
-    hide text with dissolve
-    $ renpy.pause(1.0, hard=True)
-
-    show text "接下来我要说的事与你有关，\n与你身边的所有人息息相关，\n搞不好——与全人类的命运都休戚相关。" with dissolve
-    $ renpy.pause(2.0, hard=True)
-
-    hide text with dissolve
-    $ renpy.pause(1.0, hard=True)
-
-    play sound "end.wav" volume 0.75
-
-    $ renpy.notify("💡终极Tip：“中央俱乐部”已添加至词典")
-
-    show text "为了绕开“中央俱乐部”的阿瓦隆系统向外传递信息，\n林笃和我专门制作了这个游戏作为掩护。" with dissolve
-    $ renpy.pause(2.0, hard=True)
-
-    hide text with dissolve
-    $ renpy.pause(1.0, hard=True)
-
-    show text "说实话，我对地球呀世界啊这类事情一点兴趣都没。\n这一点从我当任F4时你也能看出来。" with dissolve
-    $ renpy.pause(2.0, hard=True)
-
-    hide text with dissolve
-
-    show f4 with dissolve
-
-    $ renpy.pause(0.5, hard=True)
-    
-    show cc with dissolve
-
-    scene black
-    with fade
-
-    show text "守护好所珍视的人，对一切不寻常保持警惕。\n不要被事物的表面现象所疑惑：CC人员早就潜伏在你生活的每一个死角。\n暨珠学运与青工办与你同在。武运昌隆，同志。" with dissolve
-    $ renpy.pause(10.0, hard=True)
-
-    play sound "end.wav" volume 1.0
-
-    hide text with dissolve
-    $ renpy.pause(2.0, hard=True)
-
-    stop music fadeout 2.0
+    with Pause(2)
 
     $ _game_menu_screen = None
     $ movie_length = 117
     $ skip_hide = 5.0
 
     if renpy.variant("pc"):
-        $ movie_playing = "video/PC/R_extra_ed.webm"
+        $ movie_playing = "video/PC/L_ed.webm"
     elif renpy.variant("mobile"):
-        $ movie_playing = "video/Android/R_extra_ed.webm"
-        
-    call screen movie 
-    with dissolve
+        $ movie_playing = "video/Android/L_ed.webm"
+
+    call screen movie with dissolve
 
     $ _game_menu_screen = 'save'
     $ persistent.game_completed = True
-    $ quick_menu = True  
+    $ quick_menu = True 
 
+    # 解锁ed
+    play music "music/ed.mp3" volume 0
+    stop music
     stop sound
 
     scene end menu 
